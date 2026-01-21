@@ -22,6 +22,8 @@ export const generateOtp = async (userId) => {
 export const verifyOtpController = async (req, res) => {
   try {
     const { userId, otp } = req.body;
+    console.log(userId,otp);
+    
 
     if (!userId || !otp) {
       return res.status(400).json({
@@ -72,7 +74,7 @@ export const verifyOtpController = async (req, res) => {
 
     res.cookie("token", token, cookieOptions).status(200).json({
       message: "OTP Verified successfully",
-      user,
+      data:user,
       success: true,
     });
 

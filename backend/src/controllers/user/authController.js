@@ -35,11 +35,11 @@ export const userSignupController = async (req, res) => {
       bloodGroup,
     });
 
-     await generateOtp(user?._id);
+    await generateOtp(user?._id);
 
     res.status(201).json({
       message: "Signup successful",
-      user: {
+      data: {
         id: user._id,
         name: user.name,
         email: user.email,
@@ -60,7 +60,7 @@ export const userLoginController = async (req, res) => {
       return res.status(400).json({ message: "Email and password required" });
     }
 
-    const user = await USER.findOne({ email })
+    const user = await USER.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -76,11 +76,11 @@ export const userLoginController = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-     await generateOtp(user?._id);
+    await generateOtp(user?._id);
 
     res.status(200).json({
       message: "Login successful",
-      user: {
+      data: {
         id: user._id,
         name: user.name,
         email: user.email,
@@ -90,5 +90,35 @@ export const userLoginController = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: "Login failed", error: error.message });
+  }
+};
+
+export const logoutController = async (req, res) => {
+  try {
+    res
+      .clearCookie("token")
+      .status(200)
+      .json({ message: "User logged out successfully" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({
+      message: "Error in logging in user",
+    });
+  }
+};
+
+export const checkAuth = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const user = await USER.findById(userId);
+
+    if (!user)
+      res.status(404).json({
+        message: "User not found",
+      });
+
+    res.status(200).json({ data: user });
+  } catch (error) {
+    console.log(error.message, "Internal server error");
   }
 };

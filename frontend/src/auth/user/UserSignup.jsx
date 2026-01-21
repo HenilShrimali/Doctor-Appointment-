@@ -9,15 +9,16 @@ import {
   EyeOff,
   ArrowLeft,
   Calendar,
-  CheckCircle2,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useUserAuthStore } from "../../store/userAuthStore";
 
 export default function UserSignup() {
   const navigate = useNavigate();
+  const { userSignup, isSigningUp } = useUserAuthStore();
+
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
     phone: "",
     dateOfBirth: "",
@@ -26,7 +27,6 @@ export default function UserSignup() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [focusedField, setFocusedField] = useState(null);
 
@@ -47,12 +47,12 @@ export default function UserSignup() {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.firstName.trim())
-      newErrors.firstName = "First name is required";
-    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
+    if (!formData.name.trim()) newErrors.name = "Name is required";
     if (!formData.email.includes("@"))
       newErrors.email = "Valid email is required";
     if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
+    else if (formData.phone.length < 10 || formData.phone.length > 15)
+      newErrors.phone = "Phone must be 10-15 digits";
     if (!formData.dateOfBirth)
       newErrors.dateOfBirth = "Date of birth is required";
     if (!formData.city.trim()) newErrors.city = "City is required";
@@ -63,33 +63,32 @@ export default function UserSignup() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) return;
 
-    setIsLoading(true);
-    setTimeout(() => {
-      console.log("User signup data:", formData);
-      setIsLoading(false);
-    }, 1500);
+    const signupData = {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      dateOfBirth: formData.dateOfBirth,
+      city: formData.city,
+      password: formData.password,
+    };
+    await userSignup(signupData);
+
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-green-50 overflow-y-auto">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div
-          className="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20"
-          style={{ animationDuration: "8s" }}
-        ></div>
-        <div
-          className="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-green-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20"
-          style={{ animationDuration: "8s", animationDelay: "2s" }}
-        ></div>
+        <div className="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-green-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
       </div>
 
       <nav className="backdrop-blur-sm bg-white/40 border-b border-white/30 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 h-14 sm:h-16 md:h-20 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 h-14 sm:h-16 md:h-20 flex items-center justify-end">
           <button
             onClick={() => navigate("/")}
             className="flex items-center gap-2 text-slate-600 hover:text-blue-600 font-medium transition-colors text-xs sm:text-sm md:text-base px-3 py-2 rounded-lg hover:bg-white/50"
@@ -116,68 +115,35 @@ export default function UserSignup() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-slate-800 mb-2">
-                    First Name
-                  </label>
-                  <div className="relative">
-                    <User className="absolute left-3.5 top-3 sm:top-3.5 w-4 h-4 sm:w-5 sm:h-5 text-slate-400 pointer-events-none" />
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      onFocus={() => setFocusedField("firstName")}
-                      onBlur={() => setFocusedField(null)}
-                      placeholder="John"
-                      className={`w-full bg-white border-2 rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-11 pr-4 text-sm sm:text-base text-slate-900 placeholder-slate-400 transition-all duration-200 ${
-                        errors.firstName
-                          ? "border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
-                          : focusedField === "firstName"
-                            ? "border-blue-400 focus:ring-2 focus:ring-blue-500/20"
-                            : "border-slate-200 hover:border-slate-300 focus:border-blue-500"
-                      } focus:outline-none`}
-                    />
-                  </div>
-                  {errors.firstName && (
-                    <p className="text-red-500 text-xs mt-2 flex items-center gap-1">
-                      <span className="w-1 h-1 rounded-full bg-red-500"></span>
-                      {errors.firstName}
-                    </p>
-                  )}
+              <div>
+                <label className="block text-xs sm:text-sm font-semibold text-slate-800 mb-2">
+                  Full Name
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3.5 top-3 sm:top-3.5 w-4 h-4 sm:w-5 sm:h-5 text-slate-400 pointer-events-none" />
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    onFocus={() => setFocusedField("name")}
+                    onBlur={() => setFocusedField(null)}
+                    placeholder="John Doe"
+                    className={`w-full bg-white border-2 rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-11 pr-4 text-sm sm:text-base text-slate-900 placeholder-slate-400 transition-all duration-200 ${
+                      errors.name
+                        ? "border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
+                        : focusedField === "name"
+                          ? "border-blue-400 focus:ring-2 focus:ring-blue-500/20"
+                          : "border-slate-200 hover:border-slate-300 focus:border-blue-500"
+                    } focus:outline-none`}
+                  />
                 </div>
-
-                <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-slate-800 mb-2">
-                    Last Name
-                  </label>
-                  <div className="relative">
-                    <User className="absolute left-3.5 top-3 sm:top-3.5 w-4 h-4 sm:w-5 sm:h-5 text-slate-400 pointer-events-none" />
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      onFocus={() => setFocusedField("lastName")}
-                      onBlur={() => setFocusedField(null)}
-                      placeholder="Doe"
-                      className={`w-full bg-white border-2 rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-11 pr-4 text-sm sm:text-base text-slate-900 placeholder-slate-400 transition-all duration-200 ${
-                        errors.lastName
-                          ? "border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
-                          : focusedField === "lastName"
-                            ? "border-blue-400 focus:ring-2 focus:ring-blue-500/20"
-                            : "border-slate-200 hover:border-slate-300 focus:border-blue-500"
-                      } focus:outline-none`}
-                    />
-                  </div>
-                  {errors.lastName && (
-                    <p className="text-red-500 text-xs mt-2 flex items-center gap-1">
-                      <span className="w-1 h-1 rounded-full bg-red-500"></span>
-                      {errors.lastName}
-                    </p>
-                  )}
-                </div>
+                {errors.name && (
+                  <p className="text-red-500 text-xs mt-2 flex items-center gap-1">
+                    <span className="w-1 h-1 rounded-full bg-red-500"></span>
+                    {errors.name}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -224,7 +190,7 @@ export default function UserSignup() {
                     onChange={handleChange}
                     onFocus={() => setFocusedField("phone")}
                     onBlur={() => setFocusedField(null)}
-                    placeholder="1548264859"
+                    placeholder="9876543210"
                     className={`w-full bg-white border-2 rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-11 pr-4 text-sm sm:text-base text-slate-900 placeholder-slate-400 transition-all duration-200 ${
                       errors.phone
                         ? "border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
@@ -286,7 +252,7 @@ export default function UserSignup() {
                       onChange={handleChange}
                       onFocus={() => setFocusedField("city")}
                       onBlur={() => setFocusedField(null)}
-                      placeholder="New York"
+                      placeholder="Mumbai"
                       className={`w-full bg-white border-2 rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-11 pr-4 text-sm sm:text-base text-slate-900 placeholder-slate-400 transition-all duration-200 ${
                         errors.city
                           ? "border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
@@ -352,10 +318,10 @@ export default function UserSignup() {
 
               <button
                 type="submit"
-                disabled={isLoading}
+                disabled={isSigningUp}
                 className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed text-white font-semibold py-3 sm:py-3.5 rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-95 text-sm sm:text-base mt-8 sm:mt-10 shadow-lg hover:shadow-xl"
               >
-                {isLoading ? (
+                {isSigningUp ? (
                   <span className="flex items-center justify-center gap-2">
                     <svg
                       className="animate-spin h-4 w-4 sm:h-5 sm:w-5"

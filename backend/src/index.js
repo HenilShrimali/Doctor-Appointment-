@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 import connectDB from './config/dbConnection.js';
 import userRoutes from './routes/userRoutes.js';
+import cors from 'cors';
+import cookieParser from "cookie-parser";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,7 +18,13 @@ connectDB(process.env.MONGO_URL)
   });
 
 //Middlewares
+app.use(cors({
+  origin: true,
+  credentials: true,
+}))
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 
 
 // Routes
