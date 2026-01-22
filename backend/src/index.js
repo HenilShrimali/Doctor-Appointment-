@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 import connectDB from './config/dbConnection.js';
 import userRoutes from './routes/userRoutes.js';
+import clinicRoutes from './routes/clinicRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 import cors from 'cors';
 import cookieParser from "cookie-parser";
 
@@ -29,6 +31,8 @@ app.use(cookieParser());
 
 // Routes
 app.use("/api/user",userRoutes)
+app.use("/api/clinic",clinicRoutes)
+app.use("/api/admin",adminRoutes)
 
 app.listen(PORT, () => {
   console.log(`SERVER IS RUNNING ON PORT ${PORT}`);

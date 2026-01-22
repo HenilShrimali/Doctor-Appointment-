@@ -1,6 +1,7 @@
 import USER from "../../models/userModel.js";
 import bcrypt from "bcrypt";
 import { generateOtp } from "./otpController.js";
+import cloudinary from "../../utils/cloudinary.js";
 
 export const userSignupController = async (req, res) => {
   try {
@@ -120,5 +121,175 @@ export const checkAuth = async (req, res) => {
     res.status(200).json({ data: user });
   } catch (error) {
     console.log(error.message, "Internal server error");
+  }
+};
+
+export const updateUserProfileController = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { name, email, phone, dateOfBirth, city, bloodGroup } = req.body;
+
+    const user = await USER.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    if (email && email !== user.email) {
+      const emailExists = await USER.findOne({ email, _id: { $ne: userId } });
+      if (emailExists) {
+        return res.status(400).json({
+          success: false,
+          message: "Email is already in use by another user",
+        });
+      }
+    }
+
+    if (phone && phone !== user.phone) {
+      const phoneExists = await USER.findOne({ phone, _id: { $ne: userId } });
+      if (phoneExists) {
+        return res.status(400).json({
+          success: false,
+          message: "Phone number is already in use by another user",
+        });
+      }
+    }
+
+    if (phone && !/^[0-9]{10,15}$/.test(phone)) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid phone number (10-15 digits)",
+      });
+    }
+
+    const validBloodGroups = [
+      "O+",
+      "O-",
+      "A+",
+      "A-",
+      "B+",
+      "B-",
+      "AB+",
+      "AB-",
+      "Unknown",
+    ];
+    if (bloodGroup && !validBloodGroups.includes(bloodGroup)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid blood group",
+      });
+    }
+
+    user.name = name || user.name;
+    user.email = email || user.email;
+    user.phone = phone || user.phone;
+    user.dateOfBirth = dateOfBirth || user.dateOfBirth;
+    user.city = city || user.city;
+    user.bloodGroup = bloodGroup || user.bloodGroup;
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      data: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        dateOfBirth: user.dateOfBirth,
+        city: user.city,
+        bloodGroup: user.bloodGroup,
+        profilePicture: user.profilePicture,
+        role: user.role,
+        isActive: user.isActive,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+      },
+    });
+  } catch (error) {
+    console.error("Update user profile error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
+
+export const updateUserProfilePictureController = async (req, res) => {
+  try {
+    const { profilePicture } = req.body;
+    const userId = req.user?._id;
+
+    if (!profilePicture) {
+      return res.status(400).json({
+        success: false,
+        message: "Profile picture is required",
+      });
+    }
+
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
+    const user = await USER.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const uploadResponse = await cloudinary.uploader.upload(profilePicture, {
+      folder: "users/profile",
+      resource_type: "image",
+    });
+
+    const updatedUser = await USER.findByIdAndUpdate(
+      userId,
+      { profilePicture: uploadResponse.secure_url },
+      { new: true },
+    ).select("-password");
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Profile picture updated successfully",
+      data: {
+        id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        phone: updatedUser.phone,
+        dateOfBirth: updatedUser.dateOfBirth,
+        city: updatedUser.city,
+        bloodGroup: updatedUser.bloodGroup,
+        profilePicture: updatedUser.profilePicture,
+        isActive: updatedUser.isActive,
+        role: updatedUser.role,
+        createdAt: updatedUser.createdAt,
+        updatedAt: updatedUser.updatedAt,
+      },
+    });
+  } catch (error) {
+    console.error("Update user profile picture error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error updating profile picture",
+      error: error.message,
+    });
   }
 };

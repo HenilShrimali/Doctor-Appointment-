@@ -5,7 +5,7 @@ function AdminMainLayout({ children }) {
   return (
     <div>
       <AdminNavbar />
-      <main style={{ padding: "20px" }}>{children}</main>
+      <main>{children}</main>
     </div>
   );
 }

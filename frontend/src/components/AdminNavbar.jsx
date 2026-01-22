@@ -10,6 +10,7 @@ import {
   Menu,
   X,
   Shield,
+  Building2,
 } from "lucide-react";
 
 function AdminNavbar() {
@@ -30,14 +31,19 @@ function AdminNavbar() {
       icon: FileText,
     },
     {
+      name: "Users",
+      path: "/admin/users",
+      icon: Users,
+    },
+    {
       name: "Doctors",
       path: "/admin/doctors",
       icon: Stethoscope,
     },
     {
-      name: "Users",
-      path: "/admin/users",
-      icon: Users,
+      name: "Clinics",
+      path: "/admin/clinics",
+      icon: Building2,
     },
     {
       name: "Appointments",

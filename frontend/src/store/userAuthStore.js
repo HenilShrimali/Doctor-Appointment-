@@ -12,6 +12,7 @@ export const useUserAuthStore = create((set) => ({
     setIsLoggedIn: (status) => set({ isLoggedIn: status }),
     isLoggingIn: false,
     isSigningUp: false,
+    isAuthLoading: false,
 
     userLogin:async (userData) => {
         set({ isLoggingIn: true });
@@ -69,12 +70,37 @@ export const useUserAuthStore = create((set) => ({
     },
 
     checkAuth: async()=>{
+        set({ isAuthLoading: true });
         try {
             const res = await axiosInstance.get("/user/check-auth");
             set({user: res.data.data,isUserAuthenticated: true,isLoggedIn:true});
         } catch (error) {
             console.log("User not authenticated");
+        }finally{
+            set({ isAuthLoading: false });
         }
+    },
+
+    updateUserProfile: async(updatedData)=>{
+        try {
+            const res = await axiosInstance.put("/user/updateProfile", updatedData);
+            set({user: res.data.data});
+            toast.success("Profile updated successfully!");
+        } catch (error) {
+            console.error("Profile update failed:", error.response?.data.message || error.message);
+            toast.error(`Profile update failed: ${error.response?.data.message || error.message}`);
+        }
+    },
+
+    updateUserProfilePicture: async(profilePicture)=>{
+        try {
+            const res = await axiosInstance.put("/user/updateProfilePicture", {profilePicture});
+            set({user: res.data.data});
+            toast.success("Profile picture updated successfully!");
+        } catch (error) {
+            console.error("Profile picture update failed:", error.response?.data.message || error.message);
+            toast.error(`Profile picture update failed: ${error.response?.data.message || error.message}`);
+        }   
     },
 
 }));

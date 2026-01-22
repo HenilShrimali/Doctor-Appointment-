@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import { checkAuth, logoutController, userLoginController, userSignupController } from '../controllers/user/authController.js';
+import { checkAuth, logoutController, updateUserProfileController, updateUserProfilePictureController, userLoginController, userSignupController } from '../controllers/user/authController.js';
 import { verifyOtpController } from '../controllers/user/otpController.js';
 import { authMiddleware } from '../middleware/userAuthMiddleware.js';
 
@@ -10,5 +10,7 @@ router.post("/login",userLoginController)
 router.post("/verify", verifyOtpController);
 router.post("/logout",logoutController)
 router.get("/check-auth", authMiddleware, checkAuth);
+router.put("/updateProfile",authMiddleware,updateUserProfileController);
+router.put("/updateProfilePicture",authMiddleware,updateUserProfilePictureController);
 
 export default router;

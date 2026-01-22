@@ -26,7 +26,7 @@ export default function RoleSelection() {
     },
     {
       id: "clinic",
-      title: "Clinic",
+      title: "Clinic/Hospital",
       subtitle: "Manage Operations",
       description:
         "Manage multiple doctors, handle patient appointments, and streamline your clinic operations effortlessly",
