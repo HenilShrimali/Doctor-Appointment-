@@ -12,10 +12,12 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useUserAuthStore } from "../../store/userAuthStore";
+import { useEffect } from "react";
 
 export default function UserSignup() {
   const navigate = useNavigate();
-  const { userSignup, isSigningUp } = useUserAuthStore();
+  const { user, userSignup, isSigningUp, isLoggedIn, isUserAuthenticated } =
+    useUserAuthStore();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -79,6 +81,12 @@ export default function UserSignup() {
     await userSignup(signupData);
 
   };
+
+  useEffect(() => {
+    if(isLoggedIn && !isUserAuthenticated){
+      navigate("/userVerify");
+    }
+  },[isLoggedIn,isUserAuthenticated,user]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-green-50 overflow-y-auto">

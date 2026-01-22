@@ -7,6 +7,8 @@ import VerifyOtp from './auth/user/VerifyOtp';
 import { useUserAuthStore } from './store/userAuthStore';
 import UserHome from './user/UserHome';
 import { useEffect } from 'react';
+import ClinicRequeste from './admin/ClinicRequests.jsx';
+import ClinicRequests from './admin/ClinicRequests.jsx';
 
 function App() {
   const { user, isUserAuthenticated, isLoggedIn, checkAuth } = useUserAuthStore();
@@ -58,8 +60,21 @@ function App() {
               isUserAuthenticated ? <UserHome /> : <Navigate to="/userLogin" />
             }
           />
-        </Routes>
 
+        {/* Admin ROutes */}
+        <Route 
+          path="/admin/clinicRequests"
+          element={
+            isUserAuthenticated && user?.role === "admin" ? (
+              <ClinicRequests />
+
+            ) : (
+              <Navigate to="/userLogin" />
+            )
+          }
+        />
+
+        </Routes>
       </Router>
       <Toaster position="top-right" reverseOrder={false} />
     </>

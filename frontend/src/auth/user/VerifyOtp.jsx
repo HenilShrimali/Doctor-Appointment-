@@ -21,6 +21,10 @@ function VerifyOtp() {
   };
 
   useEffect(() => {
+    if(user?.role==="admin"){
+      navigate("/admin/clinicRequests");
+      return;
+    }
     if(isUserAuthenticated) navigate("/userHome");
     }, [user,isUserAuthenticated]);
 
