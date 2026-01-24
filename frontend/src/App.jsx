@@ -31,16 +31,25 @@ import ClinicSettings from './clinic/ClinicSettings.jsx';
 import ClinicNotification from './clinic/ClinicNotification.jsx';
 import ClinicProfile from './clinic/ClinicProfile.jsx';
 import DoctorLogin from './auth/doctor/DoctorLogin.jsx';
+import { useDoctorAuthStore } from './store/doctorAuthStore.js';
+import DoctorMainLayout from './layout/DoctorMainLayout.jsx';
+import DoctorHome from './doctor/DoctorHome.jsx';
+import DoctorProfile from './doctor/DoctorProfile.jsx';
+import DoctorSettings from './doctor/DoctorSettings.jsx';
+import DoctorNotifications from './doctor/DoctorNotifications.jsx';
+import DoctorAppointments from './doctor/DoctorAppointments.jsx';
+import DoctorSchedule from './doctor/DoctorSchedule.jsx';
+import DoctorPatients from './doctor/DoctorPatients.jsx';
 
 function App() {
   const { user, isUserAuthenticated, isLoggedIn, checkAuth, isAuthLoading } =
     useUserAuthStore();
   const {
-    clinic,
     isClinicAuthenticated,
     checkClinicAuth,
     isClinicAuthLoading,
   } = useClinicAuthStore();
+  const { isDoctorAuthenticated, checkDoctorAuth } = useDoctorAuthStore();
 
   useEffect(() => {
     checkAuth();
@@ -49,6 +58,10 @@ function App() {
   useEffect(() => {
     checkClinicAuth();
   }, [checkClinicAuth]);
+
+  useEffect(() => {
+    checkDoctorAuth();
+  }, [checkDoctorAuth]);
 
   if (isAuthLoading || isClinicAuthLoading) {
     return (
@@ -362,7 +375,107 @@ function App() {
           />
 
           {/* Doctor Routes */}
-          <Route path="/doctorLogin" element={<DoctorLogin />} />
+          <Route
+            path="/doctorLogin"
+            element={
+              !isDoctorAuthenticated ? (
+                <DoctorLogin />
+              ) : (
+                <Navigate to={"/doctorHome"} />
+              )
+            }
+          />
+
+          <Route
+            path="/doctorHome"
+            element={
+              isDoctorAuthenticated ? (
+                <DoctorMainLayout>
+                  <DoctorHome />
+                </DoctorMainLayout>
+              ) : (
+                <Navigate to={"/doctorLogin"} />
+              )
+            }
+          />
+
+          <Route
+            path="/doctorProfile"
+            element={
+              isDoctorAuthenticated ? (
+                <DoctorMainLayout>
+                  <DoctorProfile />
+                </DoctorMainLayout>
+              ) : (
+                <Navigate to={"/doctorLogin"} />
+              )
+            }
+          />
+
+          <Route
+            path="/doctorSettings"
+            element={
+              isDoctorAuthenticated ? (
+                <DoctorMainLayout>
+                  <DoctorSettings />
+                </DoctorMainLayout>
+              ) : (
+                <Navigate to={"/doctorLogin"} />
+              )
+            }
+          />
+
+          <Route
+            path="/doctorNotifications"
+            element={
+              isDoctorAuthenticated ? (
+                <DoctorMainLayout>
+                  <DoctorNotifications />
+                </DoctorMainLayout>
+              ) : (
+                <Navigate to={"/doctorLogin"} />
+              )
+            }
+          />
+
+          <Route
+            path="/doctorAppointments"
+            element={
+              isDoctorAuthenticated ? (
+                <DoctorMainLayout>
+                  <DoctorAppointments />
+                </DoctorMainLayout>
+              ) : (
+                <Navigate to={"/doctorLogin"} />
+              )
+            }
+          />
+
+          <Route
+            path="/doctorSchedule"
+            element={
+              isDoctorAuthenticated ? (
+                <DoctorMainLayout>
+                  <DoctorSchedule />
+                </DoctorMainLayout>
+              ) : (
+                <Navigate to={"/doctorLogin"} />
+              )
+            }
+          />
+
+          <Route
+            path="/doctorPatients"
+            element={
+              isDoctorAuthenticated ? (
+                <DoctorMainLayout>
+                  <DoctorPatients />
+                </DoctorMainLayout>
+              ) : (
+                <Navigate to={"/doctorLogin"} />
+              )
+            }
+          />
         </Routes>
       </Router>
       <Toaster position="top-right" reverseOrder={false} />

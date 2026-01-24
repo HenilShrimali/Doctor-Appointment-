@@ -4,7 +4,6 @@ import {
   Plus, 
   Search, 
   Edit, 
-  Eye, 
   X,
   User,
   Phone,
@@ -35,7 +34,6 @@ function ClinicDoctors() {
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [showViewModal, setShowViewModal] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [formData, setFormData] = useState({
@@ -151,7 +149,6 @@ function ClinicDoctors() {
           <p className="text-lg text-gray-600">Manage the doctors</p>
         </div>
 
-        {/* Friendly Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl p-6 text-white shadow-lg transform hover:scale-105 transition-all duration-300">
             <div className="flex items-center justify-between">
@@ -363,9 +360,7 @@ function ClinicDoctors() {
                        doctor.isActive
                           ? "bg-red-100 text-red-700 hover:bg-red-200"
                           : "bg-green-100 text-green-700 hover:bg-green-200"
-                      }
-    `               }
-                      >
+                      }`}>
                         {doctor.isActive ? (
                           <>
                             <XCircle className="w-4 h-4" />
@@ -407,7 +402,6 @@ function ClinicDoctors() {
             </div>
 
             <form onSubmit={handleSubmit} className="p-8 space-y-6 text-black">
-              {/* Profile Picture Upload */}
               <div className="flex justify-center">
                 <div className="relative">
                   <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center overflow-hidden">
@@ -614,21 +608,6 @@ function ClinicDoctors() {
       </div>
 
       <form onSubmit={handleUpdate} className="p-8 space-y-6 text-black">
-        {/* Current Doctor Info Banner */}
-        <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-2xl p-4">
-          <p className="text-sm text-purple-900">
-            <strong className="flex items-center gap-2">
-              <Heart className="w-4 h-4" />
-              Updating: {selectedDoctor.name}
-            </strong>
-          </p>
-          <p className="text-xs text-purple-700 mt-1">
-            {selectedDoctor.specialization} • Joined{" "}
-            {new Date(selectedDoctor.createdAt).toLocaleDateString()}
-          </p>
-        </div>
-
-        {/* Profile Picture Upload */}
         <div className="flex justify-center">
           <div className="relative">
             <div className="w-32 h-32 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center overflow-hidden ring-4 ring-purple-200">
@@ -840,7 +819,7 @@ function ClinicDoctors() {
       </form>
     </div>
   </div>
-)}
+      )}
     </div>
   );  
 }
