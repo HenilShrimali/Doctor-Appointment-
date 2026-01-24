@@ -51,7 +51,7 @@ export default function RoleSelection() {
       lightBg: "bg-cyan-50",
       borderColor: "border-cyan-200",
       textColor: "text-cyan-600",
-      path: "/doctorSignup",
+      path: "/doctorLogin",
       benefits: ["Schedule control", "Patient management", "Practice growth"],
     },
   ];

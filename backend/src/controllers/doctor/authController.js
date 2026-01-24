@@ -128,6 +128,7 @@ export const updateDoctorController = async (req, res) => {
     const {
       name,
       email,
+      password,
       specialization,
       qualification,
       experience,
@@ -170,6 +171,18 @@ export const updateDoctorController = async (req, res) => {
     if (profilePicture !== undefined) doctor.profilePicture = profilePicture;
     if (bio !== undefined) doctor.bio = bio;
     if (isActive !== undefined) doctor.isActive = isActive;
+
+     if (password) {
+       if (password.length < 6) {
+         return res.status(400).json({
+           success: false,
+           message: "Password must be at least 6 characters",
+         });
+       }
+
+       const hashedPassword = await bcrypt.hash(password, 10);
+       doctor.password = hashedPassword;
+     }
 
     await doctor.save();
 

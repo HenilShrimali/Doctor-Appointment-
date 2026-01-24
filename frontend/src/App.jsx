@@ -30,6 +30,7 @@ import ClinicPatients from './clinic/ClinicPatients.jsx';
 import ClinicSettings from './clinic/ClinicSettings.jsx';
 import ClinicNotification from './clinic/ClinicNotification.jsx';
 import ClinicProfile from './clinic/ClinicProfile.jsx';
+import DoctorLogin from './auth/doctor/DoctorLogin.jsx';
 
 function App() {
   const { user, isUserAuthenticated, isLoggedIn, checkAuth, isAuthLoading } =
@@ -359,6 +360,9 @@ function App() {
               )
             }
           />
+
+          {/* Doctor Routes */}
+          <Route path="/doctorLogin" element={<DoctorLogin />} />
         </Routes>
       </Router>
       <Toaster position="top-right" reverseOrder={false} />
