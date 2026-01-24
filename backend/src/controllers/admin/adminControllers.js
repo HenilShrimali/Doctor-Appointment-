@@ -120,7 +120,9 @@ export const getAllClinicsController = async (req, res) => {
 
 export const getAllDoctorsController = async (req,res)=>{
   try {
-    const doctors = await DOCTOR.find().select("-password").populate("clinicId","name city");
+    const doctors = await DOCTOR.find()
+      .select("-password")
+      .populate("clinicId", "clinicName city email phone ");
 
     res.status(200).json({
       success: true,
