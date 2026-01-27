@@ -30,30 +30,9 @@ function VerifyOtp() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-green-50 overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-green-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute top-1/2 left-1/2 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-      </div>
 
-      {/* Header */}
-      <nav className="backdrop-blur-sm bg-white/40 border-b border-white/30 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 h-14 sm:h-16 md:h-20 flex items-center justify-end">
-          <button
-            onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-slate-600 hover:text-blue-600 font-medium transition-colors text-xs sm:text-sm md:text-base px-3 py-2 rounded-lg hover:bg-white/50"
-          >
-            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-            Back
-          </button>
-        </div>
-      </nav>
-
-      {/* Main Content */}
       <div className="relative z-10 flex items-center justify-center px-3 sm:px-4 py-8 sm:py-12 md:py-16">
         <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Left Side - Form */}
           <div className="order-2 lg:order-1">
             <div className="bg-white/60 backdrop-blur-sm border border-white/50 rounded-2xl shadow-lg p-6 sm:p-8 md:p-10">
               <div className="text-center mb-8 sm:mb-10">
@@ -68,7 +47,6 @@ function VerifyOtp() {
                 </p>
               </div>
 
-              {/* Email Display */}
               {user?.email && (
                 <div className="mb-8 sm:mb-10 flex items-center justify-center gap-2 text-sm sm:text-base">
                   <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
@@ -76,7 +54,6 @@ function VerifyOtp() {
                 </div>
               )}
 
-              {/* OTP Input Section */}
               <div className="mb-8 sm:mb-10">
                 <p className="text-center text-slate-700 font-medium mb-6 text-sm sm:text-base">
                   Enter the 6-digit code below
@@ -86,7 +63,6 @@ function VerifyOtp() {
                 </div>
               </div>
 
-              {/* Verify Button */}
               <button
                 onClick={handleVerification}
                 disabled={otp.length !== 6}
@@ -96,7 +72,6 @@ function VerifyOtp() {
                 Verify Code
               </button>
 
-              {/* Resend Code */}
               <div className="mt-6 sm:mt-8 text-center">
                 <p className="text-slate-600 text-xs sm:text-sm mb-2">
                   Didn't receive the code?
@@ -105,41 +80,20 @@ function VerifyOtp() {
                   Resend Code
                 </button>
               </div>
-
-              {/* Security Note */}
-              <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-slate-200">
-                <div className="bg-blue-50/50 border border-blue-100 rounded-xl p-4">
-                  <div className="flex gap-3">
-                    <Shield className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <p className="text-xs sm:text-sm text-blue-900 font-medium mb-1">
-                        Security Tip
-                      </p>
-                      <p className="text-xs sm:text-sm text-blue-700">
-                        Never share your verification code with anyone. DocTrek will never ask for your code.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
-          {/* Right Side - Illustration */}
           <div className="order-1 lg:order-2 flex items-center justify-center">
             <div className="relative">
-              {/* Decorative circles */}
               <div className="absolute -top-4 -left-4 w-24 h-24 sm:w-32 sm:h-32 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
               <div className="absolute -bottom-4 -right-4 w-24 h-24 sm:w-32 sm:h-32 bg-green-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
               
-              {/* Image Container */}
               <div className="relative bg-white/40 backdrop-blur-sm border border-white/50 rounded-3xl p-6 sm:p-8 shadow-xl">
                 <img
                   src="/otp_logo.png"
                   alt="OTP Verification"
                   className="w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 object-contain"
                   onError={(e) => {
-                    // Fallback if image doesn't exist
                     e.target.style.display = 'none';
                     e.target.parentElement.innerHTML = `
                       <div class="w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 flex items-center justify-center">
@@ -158,7 +112,6 @@ function VerifyOtp() {
                 />
               </div>
 
-              {/* Floating badges */}
               <div className="hidden lg:block absolute -left-8 top-1/4 bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-3 animate-float">
                 <div className="flex items-center gap-2">
                   <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">

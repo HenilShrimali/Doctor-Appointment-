@@ -125,29 +125,18 @@ function UserProfile() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-green-50">
-      {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
       </div>
 
-      {/* Header */}
       <div className="relative z-10 backdrop-blur-sm bg-white/40 border-b border-white/30 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => navigate(-1)}
-                className="p-2 rounded-xl hover:bg-white/60 transition-all"
-              >
-                <ArrowLeft className="w-5 h-5 text-slate-600" />
-              </button>
+            <div className="flex items-center gap-3"> 
               <div>
-                <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
-                  My Profile
-                </h1>
-                <p className="text-slate-600 text-sm sm:text-base">
-                  Manage your personal information
+                <p className="text-black font-bold sm:text-base">
+                  Manage your information
                 </p>
               </div>
             </div>
@@ -166,7 +155,6 @@ function UserProfile() {
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-12">
         <div className="bg-white/60 backdrop-blur-sm border border-white/50 rounded-2xl shadow-lg p-6 sm:p-8 md:p-10">
-          {/* Profile Picture Section */}
           <div className="flex flex-col items-center mb-8 sm:mb-10">
             <div className="relative group">
               <div className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center shadow-xl overflow-hidden">
@@ -207,9 +195,7 @@ function UserProfile() {
             </p>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Name */}
             <div>
               <label className="block text-sm font-semibold text-slate-800 mb-2">
                 Full Name
@@ -231,7 +217,6 @@ function UserProfile() {
               </div>
             </div>
 
-            {/* Email */}
             <div>
               <label className="block text-sm font-semibold text-slate-800 mb-2">
                 Email Address
@@ -253,7 +238,6 @@ function UserProfile() {
               </div>
             </div>
 
-            {/* Phone */}
             <div>
               <label className="block text-sm font-semibold text-slate-800 mb-2">
                 Phone Number
@@ -275,7 +259,6 @@ function UserProfile() {
               </div>
             </div>
 
-            {/* Date of Birth and City */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-semibold text-slate-800 mb-2">
@@ -320,7 +303,6 @@ function UserProfile() {
               </div>
             </div>
 
-            {/* Blood Group */}
             <div>
               <label className="block text-sm font-semibold text-slate-800 mb-2">
                 Blood Group
@@ -347,7 +329,6 @@ function UserProfile() {
               </div>
             </div>
 
-            {/* Action Buttons */}
             {isEditing && (
               <div className="flex flex-col sm:flex-row gap-3 pt-4">
                 <button
@@ -369,7 +350,6 @@ function UserProfile() {
             )}
           </form>
 
-          {/* Account Information */}
           {!isEditing && (
             <div className="mt-8 pt-8 border-t border-slate-200">
               <h3 className="text-lg font-semibold text-slate-900 mb-4">

@@ -234,7 +234,7 @@ export const toggleDoctorStatusController = async (req, res) => {
     });
   }
 };
-
+  
 //For doctors
 export const doctorLoginController = async (req, res) => {
   try {

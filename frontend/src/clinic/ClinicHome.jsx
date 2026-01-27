@@ -76,7 +76,6 @@ function ClinicHome() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
             Welcome back, {clinic?.clinicName}!
@@ -86,9 +85,7 @@ function ClinicHome() {
           </p>
         </div>
 
-        {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {/* Total Doctors */}
           <div
             className="bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl p-6 text-white shadow-xl transform hover:scale-105 transition-transform cursor-pointer"
             onClick={() => navigate("/clinicDoctors")}
@@ -106,7 +103,6 @@ function ClinicHome() {
             </div>
           </div>
 
-          {/* Total Appointments */}
           <div
             className="bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl p-6 text-white shadow-xl transform hover:scale-105 transition-transform cursor-pointer"
             onClick={() => navigate("/clinicAppointments")}
@@ -124,7 +120,6 @@ function ClinicHome() {
             </div>
           </div>
 
-          {/* Today's Appointments */}
           <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-6 text-white shadow-xl transform hover:scale-105 transition-transform">
             <div className="flex items-center justify-between">
               <div>
@@ -139,7 +134,6 @@ function ClinicHome() {
             </div>
           </div>
 
-          {/* Total Patients */}
           <div
             className="bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl p-6 text-white shadow-xl transform hover:scale-105 transition-transform cursor-pointer"
             onClick={() => navigate("/clinicPatients")}
@@ -158,9 +152,7 @@ function ClinicHome() {
           </div>
         </div>
 
-        {/* Quick Actions & Today's Overview */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          {/* Quick Actions */}
           <div className="bg-white rounded-2xl shadow-xl p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-4">
               Quick Actions
@@ -213,7 +205,6 @@ function ClinicHome() {
             </div>
           </div>
 
-          {/* Today's Overview */}
           <div className="lg:col-span-2 bg-white rounded-2xl shadow-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-gray-900">
@@ -283,7 +274,6 @@ function ClinicHome() {
           </div>
         </div>
 
-        {/* Doctors Overview */}
         <div className="bg-white rounded-2xl shadow-xl p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold text-gray-900">Your Doctors</h2>

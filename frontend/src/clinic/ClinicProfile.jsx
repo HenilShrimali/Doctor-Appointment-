@@ -56,13 +56,11 @@ function ClinicProfile() {
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Check file size (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
         toast.error("Image size should be less than 5MB");
         return;
       }
 
-      // Convert to base64
       const reader = new FileReader();
       reader.onloadend = async () => {
         const base64String = reader.result;
@@ -75,7 +73,6 @@ function ClinicProfile() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
             Clinic Profile
@@ -85,12 +82,9 @@ function ClinicProfile() {
           </p>
         </div>
 
-        {/* Profile Card */}
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-          {/* Header with gradient */}
           <div className="bg-gradient-to-r from-blue-600 to-cyan-600 px-6 py-8 relative">
             <div className="flex flex-col md:flex-row items-center gap-6">
-              {/* Profile Picture */}
               <div className="relative group">
                 <div className="w-32 h-32 rounded-full bg-white p-1 shadow-lg">
                   {clinic?.profilePicture ? (
@@ -106,7 +100,6 @@ function ClinicProfile() {
                   )}
                 </div>
 
-                {/* Upload button overlay */}
                 <label
                   htmlFor="profile-upload"
                   className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
@@ -122,7 +115,6 @@ function ClinicProfile() {
                 </label>
               </div>
 
-              {/* Clinic Info */}
               <div className="text-center md:text-left text-white flex-1">
                 <h2 className="text-3xl font-bold mb-1">
                   {clinic?.clinicName}
@@ -153,7 +145,6 @@ function ClinicProfile() {
                 </div>
               </div>
 
-              {/* Edit Button */}
               {!isEditing && (
                 <button
                   onClick={() => setIsEditing(true)}
@@ -166,13 +157,10 @@ function ClinicProfile() {
             </div>
           </div>
 
-          {/* Profile Details */}
           <div className="p-6">
             {isEditing ? (
-              /* Edit Form */
               <form onSubmit={handleSubmit} className="space-y-6 text-black">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Clinic Name */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Clinic Name
@@ -190,7 +178,6 @@ function ClinicProfile() {
                     </div>
                   </div>
 
-                  {/* Owner Name */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Owner Name
@@ -208,7 +195,6 @@ function ClinicProfile() {
                     </div>
                   </div>
 
-                  {/* Email */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Email
@@ -226,7 +212,6 @@ function ClinicProfile() {
                     </div>
                   </div>
 
-                  {/* Phone */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Phone
@@ -244,7 +229,6 @@ function ClinicProfile() {
                     </div>
                   </div>
 
-                  {/* City */}
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       City
@@ -263,7 +247,6 @@ function ClinicProfile() {
                   </div>
                 </div>
 
-                {/* Action Buttons */}
                 <div className="flex gap-4 pt-4 border-t border-gray-200">
                   <button
                     type="submit"
@@ -312,10 +295,8 @@ function ClinicProfile() {
                 </div>
               </form>
             ) : (
-              /* View Mode */
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Clinic Name */}
                   <div className="bg-gray-50 rounded-lg p-4">
                     <div className="flex items-center gap-2 mb-2">
                       <Building2 className="w-5 h-5 text-gray-400" />
@@ -328,7 +309,6 @@ function ClinicProfile() {
                     </p>
                   </div>
 
-                  {/* Owner Name */}
                   <div className="bg-gray-50 rounded-lg p-4">
                     <div className="flex items-center gap-2 mb-2">
                       <User className="w-5 h-5 text-gray-400" />
@@ -341,7 +321,6 @@ function ClinicProfile() {
                     </p>
                   </div>
 
-                  {/* Email */}
                   <div className="bg-gray-50 rounded-lg p-4">
                     <div className="flex items-center gap-2 mb-2">
                       <Mail className="w-5 h-5 text-gray-400" />
@@ -352,7 +331,6 @@ function ClinicProfile() {
                     <p className="text-gray-900 font-medium">{clinic?.email}</p>
                   </div>
 
-                  {/* Phone */}
                   <div className="bg-gray-50 rounded-lg p-4">
                     <div className="flex items-center gap-2 mb-2">
                       <Phone className="w-5 h-5 text-gray-400" />
@@ -363,7 +341,6 @@ function ClinicProfile() {
                     <p className="text-gray-900 font-medium">{clinic?.phone}</p>
                   </div>
 
-                  {/* City */}
                   <div className="bg-gray-50 rounded-lg p-4 md:col-span-2">
                     <div className="flex items-center gap-2 mb-2">
                       <MapPin className="w-5 h-5 text-gray-400" />
@@ -375,7 +352,6 @@ function ClinicProfile() {
                   </div>
                 </div>
 
-                {/* Additional Info */}
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                   <h3 className="font-semibold text-blue-900 mb-2">
                     Account Information
@@ -419,7 +395,6 @@ function ClinicProfile() {
           </div>
         </div>
 
-        {/* Help Text */}
         <div className="mt-6 bg-white rounded-xl shadow-md p-4">
           <p className="text-sm text-gray-600 text-center">
             <strong>Note:</strong> Profile picture changes are instant. Other

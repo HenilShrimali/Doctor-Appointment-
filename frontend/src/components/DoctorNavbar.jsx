@@ -103,7 +103,7 @@ function DoctorNavbar() {
                 </div>
                 <div className="hidden md:block text-left">
                   <p className="text-sm font-medium text-gray-900">
-                    Dr. {doctor?.name}
+                    {doctor?.name}
                   </p>
                   <p className="text-xs text-gray-500">
                     {doctor?.specialization}
