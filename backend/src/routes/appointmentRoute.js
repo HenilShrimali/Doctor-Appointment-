@@ -7,16 +7,16 @@ import {
   getAvailableDoctors,
   getDoctorAvailableSlots,
 } from "../controllers/doctor/appointmentController.js";
-import { doctorAuthMiddleware } from "../middleware/doctorMiddleware.js";
+import {authMiddleware} from "../middleware/userAuthMiddleware.js"
 
 const router = express.Router();
 
 
-router.get("/doctors", doctorAuthMiddleware, getAvailableDoctors);
-router.get("/doctors/:doctorId/slots",doctorAuthMiddleware, getDoctorAvailableSlots);
-router.post("/",doctorAuthMiddleware, createAppointment);
-router.get("/",doctorAuthMiddleware, getUserAppointments);
-router.get("/:appointmentId", doctorAuthMiddleware,getAppointmentById);
-router.put("/:appointmentId/cancel",doctorAuthMiddleware, cancelAppointment);
+router.get("/doctors", authMiddleware, getAvailableDoctors);
+router.get("/doctors/:doctorId/slots",authMiddleware, getDoctorAvailableSlots);
+router.post("/",authMiddleware, createAppointment);
+router.get("/",authMiddleware, getUserAppointments);
+router.get("/:appointmentId", authMiddleware,getAppointmentById);
+router.put("/:appointmentId/cancel",authMiddleware, cancelAppointment);
 
 export default router;
