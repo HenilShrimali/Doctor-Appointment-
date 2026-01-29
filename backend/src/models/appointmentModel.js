@@ -53,7 +53,7 @@ const appointmentSchema = new mongoose.Schema(
     },
     paymentMethod: {
       type: String,
-      enum: ["razorpay", "stripe", "cash"],
+      enum: ["razorpay"],
     },
     paymentId: {
       type: String,
