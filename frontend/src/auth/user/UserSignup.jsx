@@ -95,7 +95,7 @@ export default function UserSignup() {
         <div className="w-full max-w-xl">
           <div className="bg-white/60 backdrop-blur-sm border border-white/50 rounded-2xl shadow-lg p-6 sm:p-8 md:p-10">
             <div className="text-center mb-8 sm:mb-10">
-              <div className="inline-flex items-center justify-center mb-4 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg">
+              <div className="inline-flex items-center justify-center mb-4 w-14 h-14 sm:w-16 sm:h-16 bg-teal-600 hover:scale-110 transition-all rounded-xl shadow-lg">
                 <User className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-3">
@@ -214,7 +214,7 @@ export default function UserSignup() {
                       onChange={handleChange}
                       onFocus={() => setFocusedField("dateOfBirth")}
                       onBlur={() => setFocusedField(null)}
-                      className={`w-full bg-white border-2 rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-11 pr-4 text-sm sm:text-base text-slate-900 transition-all duration-200 ${
+                      className={`w-full bg-white border-2 rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-11 pr-4 text-sm sm:text-base text-black transition-all duration-200 ${
                         errors.dateOfBirth
                           ? "border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
                           : focusedField === "dateOfBirth"
@@ -311,7 +311,7 @@ export default function UserSignup() {
               <button
                 type="submit"
                 disabled={isSigningUp}
-                className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed text-white font-semibold py-3 sm:py-3.5 rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-95 text-sm sm:text-base mt-8 sm:mt-10 shadow-lg hover:shadow-xl"
+                className="w-full bg-teal-600 disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed text-white font-semibold py-3 sm:py-3.5 rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-95 text-sm sm:text-base mt-8 sm:mt-10 shadow-lg hover:shadow-xl"
               >
                 {isSigningUp ? (
                   <span className="flex items-center justify-center gap-2">

@@ -36,7 +36,7 @@ function VerifyOtp() {
           <div className="order-2 lg:order-1">
             <div className="bg-white/60 backdrop-blur-sm border border-white/50 rounded-2xl shadow-lg p-6 sm:p-8 md:p-10">
               <div className="text-center mb-8 sm:mb-10">
-                <div className="inline-flex items-center justify-center mb-4 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg">
+                <div className="inline-flex items-center justify-center mb-4 w-14 h-14 sm:w-16 sm:h-16 bg-teal-600 hover:scale-110 transition-all rounded-xl shadow-lg">
                   <Shield className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
                 </div>
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-3">
@@ -49,7 +49,7 @@ function VerifyOtp() {
 
               {user?.email && (
                 <div className="mb-8 sm:mb-10 flex items-center justify-center gap-2 text-sm sm:text-base">
-                  <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
+                  <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-teal-600" />
                   <span className="font-medium text-slate-700">{user.email}</span>
                 </div>
               )}
@@ -66,7 +66,7 @@ function VerifyOtp() {
               <button
                 onClick={handleVerification}
                 disabled={otp.length !== 6}
-                className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed text-white font-semibold py-3 sm:py-3.5 rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-95 text-sm sm:text-base shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                className="w-full bg-teal-600 hover:bg-teal-700 disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed text-white font-semibold py-3 sm:py-3.5 rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-95 text-sm sm:text-base shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
               >
                 <CheckCircle className="w-5 h-5" />
                 Verify Code
@@ -76,7 +76,7 @@ function VerifyOtp() {
                 <p className="text-slate-600 text-xs sm:text-sm mb-2">
                   Didn't receive the code?
                 </p>
-                <button className="text-blue-600 hover:text-blue-700 font-semibold text-sm sm:text-base hover:underline transition-colors">
+                <button className="text-teal-600 hover:text-teal-700 font-semibold text-sm sm:text-base hover:underline transition-colors">
                   Resend Code
                 </button>
               </div>
@@ -98,7 +98,7 @@ function VerifyOtp() {
                     e.target.parentElement.innerHTML = `
                       <div class="w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 flex items-center justify-center">
                         <div class="text-center">
-                          <div class="inline-flex items-center justify-center w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full shadow-2xl mb-4">
+                          <div class="inline-flex items-center justify-center w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full shadow-2xl mb-4">
                             <svg class="w-12 h-12 sm:w-16 sm:h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                             </svg>

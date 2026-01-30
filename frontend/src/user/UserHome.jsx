@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useUserAuthStore } from "../store/userAuthStore";
 import { useAppointmentStore } from "../store/appointmentStore";
 import { useNavigate } from "react-router-dom";
@@ -12,12 +12,27 @@ import {
   Clock,
   MapPin,
   ChevronRight,
+  X,
+  Sparkles,
 } from "lucide-react";
 
 function UserHome() {
   const { user } = useUserAuthStore();
   const { getAvailableDoctors, doctors, isLoading } = useAppointmentStore();
   const navigate = useNavigate();
+  const [showMascotMessage, setShowMascotMessage] = useState(false);
+  const [mascotMessage, setMascotMessage] = useState("");
+
+  const healthTips = [
+    "🥗 Remember to drink 8 glasses of water daily!",
+    "🏃‍♂️ Just 30 minutes of exercise can boost your mood!",
+    "😴 Quality sleep is essential for good health!",
+    "🍎 An apple a day keeps the doctor away!",
+    "🧘‍♀️ Take a deep breath and relax your mind!",
+    "🌞 Get some sunshine for vitamin D!",
+    "🥦 Eat colorful vegetables for better nutrition!",
+    "💪 Stay active, stay healthy!",
+  ];
 
   useEffect(() => {
     if (user?.role === "admin") {
@@ -62,12 +77,20 @@ function UserHome() {
     },
   ];
 
+  const handleMascotClick = () => {
+    const randomTip = healthTips[Math.floor(Math.random() * healthTips.length)];
+    setMascotMessage(randomTip);
+    setShowMascotMessage(true);
+    setTimeout(() => setShowMascotMessage(false), 5000);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-gray-900 md:flex items-center gap-1">
-            Welcome back, <p className="text-teal-600 text-4xl">{user?.name?.split(" ")[0]}!</p>
+            Welcome back,{" "}
+            <p className="text-teal-600 text-4xl">{user?.name?.split(" ")[0]}!</p>
           </h1>
           <p className="text-gray-600">How are you feeling today?</p>
         </div>
@@ -183,7 +206,7 @@ function UserHome() {
                   />
                   <div className="flex-1 min-w-0">
                     <h4 className="font-semibold text-gray-900 truncate">
-                        {doctor.name}
+                      {doctor.name}
                     </h4>
                     <p className="text-sm text-gray-600 truncate">
                       {doctor.specialization}
@@ -204,7 +227,129 @@ function UserHome() {
           </div>
         ) : null}
       </div>
+
+      <DancingDoctorMascot
+        onClick={handleMascotClick}
+        showMessage={showMascotMessage}
+        message={mascotMessage}
+        onCloseMessage={() => setShowMascotMessage(false)}
+      />
     </div>
+  );
+}
+
+function DancingDoctorMascot({ onClick, showMessage, message, onCloseMessage }) {
+  return (
+    <>
+      <div className="fixed bottom-6 right-6 z-50">
+        <button
+          onClick={onClick}
+          className="relative group cursor-pointer"
+          aria-label="Health tip"
+        >
+          <div className="absolute -inset-2 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-full opacity-75 blur-lg group-hover:opacity-100 transition duration-300 animate-pulse"></div>
+          
+          <div className="relative bg-white rounded-full p-4 shadow-2xl border-4 border-teal-500 hover:scale-110 transition-transform duration-300">
+            <div className="animate-bounce">
+              <svg
+                className="w-16 h-16"
+                viewBox="0 0 64 64"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle cx="32" cy="20" r="12" fill="#FCD34D" />
+                
+                <rect x="20" y="32" width="24" height="28" rx="4" fill="#14B8A6" />
+                
+                <rect x="26" y="28" width="12" height="8" rx="2" fill="#FFFFFF" />
+                
+                <rect x="30" y="38" width="4" height="12" fill="#FFFFFF" />
+                <rect x="26" y="44" width="12" height="4" fill="#FFFFFF" />
+                
+                <circle cx="28" cy="18" r="2" fill="#1F2937" />
+                <circle cx="36" cy="18" r="2" fill="#1F2937" />
+                
+                <path
+                  d="M 26 24 Q 32 27 38 24"
+                  stroke="#1F2937"
+                  strokeWidth="2"
+                  fill="none"
+                  strokeLinecap="round"
+                />
+                
+                <circle cx="16" cy="42" r="4" fill="#FCD34D" className="animate-wiggle" />
+                <circle cx="48" cy="42" r="4" fill="#FCD34D" className="animate-wiggle" />
+                
+                <rect x="14" y="56" width="8" height="6" rx="2" fill="#0F766E" />
+                <rect x="42" y="56" width="8" height="6" rx="2" fill="#0F766E" />
+              </svg>
+            </div>
+          </div>
+
+          <div className="absolute -top-2 -right-2 bg-red-500 rounded-full p-1 animate-ping">
+            <Sparkles className="w-4 h-4 text-white" />
+          </div>
+          <div className="absolute -top-2 -right-2 bg-red-500 rounded-full p-1">
+            <Sparkles className="w-4 h-4 text-white" />
+          </div>
+        </button>
+      </div>
+
+      {showMessage && (
+        <div className="fixed bottom-28 right-6 z-50 animate-slideInRight">
+          <div className="bg-white rounded-2xl shadow-2xl border-2 border-teal-500 p-4 max-w-xs relative">
+            <button
+              onClick={onCloseMessage}
+              className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <Stethoscope className="w-5 h-5 text-teal-600" />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-gray-900 mb-1">Health Tip!</p>
+                <p className="text-sm text-gray-700">{message}</p>
+              </div>
+            </div>
+
+            <div className="absolute -bottom-2 right-8 w-4 h-4 bg-white border-r-2 border-b-2 border-teal-500 transform rotate-45"></div>
+          </div>
+        </div>
+      )}
+
+      <style jsx>{`
+        @keyframes wiggle {
+          0%, 100% {
+            transform: rotate(-5deg);
+          }
+          50% {
+            transform: rotate(5deg);
+          }
+        }
+
+        .animate-wiggle {
+          animation: wiggle 0.5s ease-in-out infinite;
+        }
+
+        @keyframes slideInRight {
+          from {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+
+        .animate-slideInRight {
+          animation: slideInRight 0.3s ease-out;
+        }
+      `}</style>
+    </>
   );
 }
 

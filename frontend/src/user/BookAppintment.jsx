@@ -467,10 +467,10 @@ function BookAppointment() {
                   className="w-20 h-20 rounded-lg object-cover"
                 />
                 <div>
-                  <h4 className="font-bold text-gray-900">Dr. {doctor.name}</h4>
+                  <h4 className="font-bold text-gray-900">{doctor.name}</h4>
                   <p className="text-sm text-teal-600">{doctor.specialization}</p>
                   <p className="text-sm text-gray-600 mt-1">{doctor.experience}y exp</p>
-                </div>
+                </div>  
               </div>
 
               <div className="space-y-3 mb-4">

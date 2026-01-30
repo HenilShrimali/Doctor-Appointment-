@@ -8,16 +8,13 @@ import {
   MapPin,
   FileText,
   Pill,
-  Stethoscope,
   Loader,
   Search,
-  Eye,
   X,
   Download,
   ChevronRight,
   Activity,
   Droplet,
-  Clock,
 } from "lucide-react";
 
 function DoctorPatients() {
@@ -182,9 +179,9 @@ function DoctorPatients() {
                       </span>{" "}
                       consultations
                     </div>
-                    <div className="flex items-center gap-1 text-teal-600 text-sm font-semibold">
+                    <div className="flex items-center gap-1 text-teal-600 text-sm hover:translate-x-2  transition-all font-semibold">
                       View Details
-                      <ChevronRight className="w-4 h-4" />
+                      <ChevronRight className="w-4 h-4 transition-all" />
                     </div>
                   </div>
                 </div>

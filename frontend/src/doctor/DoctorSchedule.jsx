@@ -17,11 +17,9 @@ import {
 function DoctorSchedule() {
   const {
     timeSlots,
-    scheduleStats,
     isLoading,
     isCreating,
     getTimeSlots,
-    getScheduleStats,
     createBulkTimeSlots,
     deleteTimeSlot,
     deleteBulkTimeSlots,
@@ -41,9 +39,8 @@ function DoctorSchedule() {
   });
 
   useEffect(() => {
-    getScheduleStats();
     getTimeSlots({ date: selectedDate });
-  }, [getScheduleStats, getTimeSlots, selectedDate]);
+  }, [getTimeSlots, selectedDate]);
 
   const handleDateChange = (e) => {
     setSelectedDate(e.target.value);
@@ -58,7 +55,6 @@ function DoctorSchedule() {
 
   const handleBulkCreate = async (e) => {
     e.preventDefault();
-
 
     try {
       await createBulkTimeSlots(bulkFormData);
@@ -115,85 +111,87 @@ function DoctorSchedule() {
   }, {});
 
   const selectedDateSlots = slotsByDate[selectedDate] || [];
-  const availableSlots = selectedDateSlots.filter(
+
+  // Calculate stats for SELECTED DATE ONLY
+  const totalSlotsForDate = selectedDateSlots.length;
+  const availableSlotsForDate = selectedDateSlots.filter(
     (s) => s.isAvailable && !s.isBooked,
   ).length;
-  const bookedSlots = selectedDateSlots.filter((s) => s.isBooked).length;
+  const bookedSlotsForDate = selectedDateSlots.filter((s) => s.isBooked).length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50">
+    <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-3 flex items-center justify-center gap-3">
-            <CalendarIcon className="w-10 h-10 text-emerald-600" />
-            My Schedule
-          </h1>
-          <p className="text-lg text-gray-600">
-            Manage your availability and time slots 
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">My Schedule</h1>
+          <p className="text-gray-600">
+            Manage your availability and time slots
           </p>
         </div>
 
-        {scheduleStats && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl p-6 text-white shadow-lg transform hover:scale-105 transition-all duration-300">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-blue-100 text-sm font-semibold mb-1">
-                    Total Slots
-                  </p>
-                  <p className="text-4xl font-black">
-                    {scheduleStats.totalSlots}
-                  </p>
-                  <p className="text-blue-100 text-xs mt-1">Created</p>
-                </div>
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-                  <Clock className="w-8 h-8" />
-                </div>
+        {/* Stats for SELECTED DATE */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600 font-medium mb-1">
+                  Total Slots
+                </p>
+                <p className="text-3xl font-bold text-gray-900">
+                  {totalSlotsForDate}
+                </p>
+                <p className="text-xs text-gray-500 mt-1">
+                  {new Date(selectedDate).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </p>
               </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-6 text-white shadow-lg transform hover:scale-105 transition-all duration-300">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-emerald-100 text-sm font-semibold mb-1">
-                    Available
-                  </p>
-                  <p className="text-4xl font-black">
-                    {scheduleStats.availableSlots}
-                  </p>
-                  <p className="text-emerald-100 text-xs mt-1">Open slots</p>
-                </div>
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-                  <CheckCircle className="w-8 h-8" />
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl p-6 text-white shadow-lg transform hover:scale-105 transition-all duration-300">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-purple-100 text-sm font-semibold mb-1">
-                    Booked
-                  </p>
-                  <p className="text-4xl font-black">
-                    {scheduleStats.bookedSlots}
-                  </p>
-                  <p className="text-purple-100 text-xs mt-1">Appointments</p>
-                </div>
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-                  <Activity className="w-8 h-8" />
-                </div>
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                <Clock className="w-6 h-6 text-blue-600" />
               </div>
             </div>
           </div>
-        )}
 
-        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
-          <div className="bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-6">
+          <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600 font-medium mb-1">
+                  Available
+                </p>
+                <p className="text-3xl font-bold text-emerald-600">
+                  {availableSlotsForDate}
+                </p>
+                <p className="text-xs text-gray-500 mt-1">Open slots</p>
+              </div>
+              <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
+                <CheckCircle className="w-6 h-6 text-emerald-600" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600 font-medium mb-1">Booked</p>
+                <p className="text-3xl font-bold text-purple-600">
+                  {bookedSlotsForDate}
+                </p>
+                <p className="text-xs text-gray-500 mt-1">Appointments</p>
+              </div>
+              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                <Activity className="w-6 h-6 text-purple-600" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <div className="bg-emerald-600 px-6 py-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div className="flex items-center gap-4">
                 <div>
-                  <label className="block text-emerald-100 text-sm font-semibold mb-2">
+                  <label className="block text-teal-100 text-sm font-semibold mb-2">
                     Select Date
                   </label>
                   <input
@@ -201,18 +199,21 @@ function DoctorSchedule() {
                     value={selectedDate}
                     onChange={handleDateChange}
                     min={new Date().toISOString().split("T")[0]}
-                    className="px-4 py-3 rounded-xl border-2 border-white/30 bg-white/20 text-white font-semibold focus:outline-none focus:border-white cursor-pointer"
+                    className="px-4 py-2 rounded-lg border border-teal-400 bg-emerald-600 text-white font-semibold focus:outline-none focus:ring-2 focus:ring-white cursor-pointer"
                   />
                 </div>
                 <div className="mt-6">
                   <p className="text-white text-sm">
-                    <strong>{selectedDateSlots.length}</strong> slots •
+                    <strong>{totalSlotsForDate}</strong> slots •
                     <strong className="text-emerald-200">
                       {" "}
-                      {availableSlots}
+                      {availableSlotsForDate}
                     </strong>{" "}
                     available •
-                    <strong className="text-purple-200"> {bookedSlots}</strong>{" "}
+                    <strong className="text-purple-200">
+                      {" "}
+                      {bookedSlotsForDate}
+                    </strong>{" "}
                     booked
                   </p>
                 </div>
@@ -221,15 +222,15 @@ function DoctorSchedule() {
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowBulkModal(true)}
-                  className="flex items-center gap-2 bg-white text-emerald-600 px-6 py-3 rounded-xl font-bold hover:bg-emerald-50 transition-all shadow-lg"
+                  className="flex items-center gap-2 bg-white text-teal-600 px-6 py-2 rounded-lg font-semibold hover:bg-teal-50 transition shadow"
                 >
                   <Plus className="w-5 h-5" />
                   <span>Create Slots</span>
                 </button>
-                {selectedDateSlots.length > 0 && (
+                {totalSlotsForDate > 0 && (
                   <button
                     onClick={handleDeleteAllSlots}
-                    className="flex items-center gap-2 bg-red-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-red-600 transition-all shadow-lg"
+                    className="flex items-center gap-2 bg-red-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-red-600 transition shadow"
                   >
                     <Trash2 className="w-5 h-5" />
                     <span>Clear Day</span>
@@ -242,26 +243,23 @@ function DoctorSchedule() {
           <div className="p-6">
             {isLoading ? (
               <div className="flex flex-col items-center justify-center py-20">
-                <Loader className="w-16 h-16 text-emerald-600 animate-spin mb-4" />
-                <p className="text-xl text-gray-600 font-semibold">
-                  Loading schedule...
-                </p>
+                <Loader className="w-12 h-12 text-teal-600 animate-spin mb-4" />
+                <p className="text-gray-600">Loading schedule...</p>
               </div>
             ) : selectedDateSlots.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-20 px-6">
-                <div className="w-32 h-32 bg-emerald-100 rounded-full flex items-center justify-center mb-6">
-                  <CalendarIcon className="w-16 h-16 text-emerald-600" />
+                <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                  <CalendarIcon className="w-10 h-10 text-gray-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                  No slots for this date
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  No slots for {new Date(selectedDate).toLocaleDateString()}
                 </h3>
                 <p className="text-gray-600 text-center max-w-md mb-6">
                   Create time slots to let patients book appointments with you
-                  📅
                 </p>
                 <button
                   onClick={() => setShowBulkModal(true)}
-                  className="flex items-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg"
+                  className="flex items-center gap-2 bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-teal-700 transition"
                 >
                   <Plus className="w-5 h-5" />
                   Create Time Slots
@@ -360,15 +358,15 @@ function DoctorSchedule() {
 
       {showBulkModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-3xl max-w-2xl w-full shadow-2xl max-h-[90vh] flex flex-col overflow-hidden">
-            <div className="bg-gradient-to-r from-emerald-600 to-teal-600 px-8 py-6 flex items-center justify-between flex-shrink-0">
-              <h3 className="text-2xl font-bold text-white flex items-center gap-2">
+          <div className="bg-white rounded-xl max-w-2xl w-full shadow-2xl max-h-[90vh] flex flex-col overflow-hidden">
+            <div className="bg-teal-600 px-6 py-4 flex items-center justify-between flex-shrink-0">
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
                 <Plus className="w-6 h-6" />
                 Create Time Slots
               </h3>
               <button
                 onClick={() => setShowBulkModal(false)}
-                className="text-white hover:bg-white/20 p-2 rounded-xl transition"
+                className="text-white hover:bg-white/20 p-2 rounded-lg transition"
               >
                 <XCircle className="w-6 h-6" />
               </button>
@@ -379,8 +377,8 @@ function DoctorSchedule() {
               onSubmit={handleBulkCreate}
               className="flex-1 overflow-y-auto text-black"
             >
-              <div className="p-8 space-y-6">
-                <div className="bg-blue-50 border-2 border-blue-200 rounded-2xl p-4">
+              <div className="p-6 space-y-6">
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                   <p className="text-sm text-blue-900 flex items-center gap-2">
                     <AlertCircle className="w-4 h-4" />
                     <strong>Tip:</strong> Create multiple slots at once for a
@@ -399,11 +397,11 @@ function DoctorSchedule() {
                     onChange={handleBulkInputChange}
                     required
                     min={new Date().toISOString().split("T")[0]}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition text-lg"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Start Time *
@@ -413,7 +411,7 @@ function DoctorSchedule() {
                       value={bulkFormData.startTime}
                       onChange={handleBulkInputChange}
                       required
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition text-lg"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                     >
                       {generateTimeOptions().map((time) => (
                         <option key={time} value={time}>
@@ -432,7 +430,7 @@ function DoctorSchedule() {
                       value={bulkFormData.endTime}
                       onChange={handleBulkInputChange}
                       required
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition text-lg"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                     >
                       {generateTimeOptions().map((time) => (
                         <option key={time} value={time}>
@@ -452,7 +450,7 @@ function DoctorSchedule() {
                     value={bulkFormData.slotDuration}
                     onChange={handleBulkInputChange}
                     required
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition text-lg"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   >
                     <option value={15}>15 minutes</option>
                     <option value={20}>20 minutes</option>
@@ -470,7 +468,7 @@ function DoctorSchedule() {
                     name="bufferTime"
                     value={bulkFormData.bufferTime}
                     onChange={handleBulkInputChange}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition text-lg"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   >
                     <option value={0}>No buffer (back-to-back)</option>
                     <option value={5}>5 minutes</option>
@@ -480,23 +478,21 @@ function DoctorSchedule() {
                     <option value={30}>30 minutes</option>
                   </select>
                   <p className="text-xs text-gray-500 mt-2">
-                    💡 Buffer time is break time between appointments for notes,
-                    preparation, or rest
+                    Buffer time is break time between appointments
                   </p>
                 </div>
 
-                <div className="bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4">
-                  <p className="text-sm text-emerald-900">
-                    <strong>Preview:</strong> This will create slots from{" "}
+                <div className="bg-teal-50 border border-teal-200 rounded-lg p-4">
+                  <p className="text-sm text-teal-900">
+                    <strong>Preview:</strong> Slots from{" "}
                     <strong>{bulkFormData.startTime}</strong> to{" "}
                     <strong>{bulkFormData.endTime}</strong> with{" "}
-                    <strong>{bulkFormData.slotDuration} minute</strong>{" "}
+                    <strong>{bulkFormData.slotDuration} min</strong>{" "}
                     appointments
                     {bulkFormData.bufferTime > 0 && (
                       <span>
                         {" "}
-                        + <strong>{bulkFormData.bufferTime} minute</strong>{" "}
-                        buffer
+                        + <strong>{bulkFormData.bufferTime} min</strong> buffer
                       </span>
                     )}{" "}
                     on{" "}
@@ -504,28 +500,17 @@ function DoctorSchedule() {
                       {new Date(bulkFormData.date).toLocaleDateString()}
                     </strong>
                   </p>
-                  {bulkFormData.bufferTime > 0 && (
-                    <p className="text-xs text-emerald-700 mt-2">
-                      ⏰ Total time per slot:{" "}
-                      <strong>
-                        {bulkFormData.slotDuration + bulkFormData.bufferTime}{" "}
-                        minutes
-                      </strong>{" "}
-                      ({bulkFormData.slotDuration} min appointment +{" "}
-                      {bulkFormData.bufferTime} min buffer)
-                    </p>
-                  )}
                 </div>
               </div>
             </form>
 
-            <div className="border-t border-gray-200 px-8 py-6 flex-shrink-0 bg-gray-50">
-              <div className="flex gap-4">
+            <div className="border-t border-gray-200 px-6 py-4 flex-shrink-0 bg-gray-50">
+              <div className="flex gap-3">
                 <button
                   type="button"
                   onClick={() => setShowBulkModal(false)}
                   disabled={isCreating}
-                  className="flex-1 px-6 py-3 bg-gray-200 text-gray-700 rounded-xl font-bold text-lg hover:bg-gray-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 px-6 py-2 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition disabled:opacity-50"
                 >
                   Cancel
                 </button>
@@ -533,7 +518,7 @@ function DoctorSchedule() {
                   type="submit"
                   form="bulk-slot-form"
                   disabled={isCreating}
-                  className="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-3 rounded-xl font-bold text-lg hover:from-emerald-700 hover:to-teal-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                  className="flex-1 bg-teal-600 text-white py-2 rounded-lg font-semibold hover:bg-teal-700 transition disabled:opacity-50"
                 >
                   {isCreating ? (
                     <span className="flex items-center justify-center gap-2">

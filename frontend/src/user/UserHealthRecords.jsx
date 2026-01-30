@@ -43,9 +43,9 @@ function UserHealthRecords() {
     getUserHealthRecords();
   }, []);
 
-  const handleSearch = () => {
+  useEffect(() => {
     getUserHealthRecords(searchQuery);
-  };
+  }, [searchQuery]);
 
   const handleFileSelect = (e) => {
     const files = Array.from(e.target.files);
@@ -155,12 +155,6 @@ function UserHealthRecords() {
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               />
             </div>
-            <button
-              onClick={handleSearch}
-              className="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition"
-            >
-              Search
-            </button>
           </div>
 
           <button
@@ -312,7 +306,7 @@ function UserHealthRecords() {
 
                 <button
                   onClick={() => setViewingRecord(record)}
-                  className="w-full py-2 border border-gray-300 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-50 transition"
+                  className="w-full py-2 border bg-teal-600 border-gray-300 rounded-lg text-sm font-semibold text-white hover:bg-teal-700 transition"
                 >
                   View All Files ({record.files.length})
                 </button>

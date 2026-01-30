@@ -227,7 +227,7 @@ function DoctorAppointments() {
                   onClick={() => setSelectedTab(tab.id)}
                   className={`px-4 py-2 rounded-lg font-semibold whitespace-nowrap transition ${
                     selectedTab === tab.id
-                      ? 'bg-teal-600 text-white'
+                      ? 'bg-emerald-600 text-white'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
