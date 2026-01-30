@@ -1,7 +1,7 @@
 import {Router} from 'express';
-import { checkAuth, logoutController, updateUserProfileController, updateUserProfilePictureController, userLoginController, userSignupController } from '../controllers/user/authController.js';
-import { verifyOtpController } from '../controllers/user/otpController.js';
-import { authMiddleware } from '../middleware/userAuthMiddleware.js';
+import { checkAuth, logoutController, updateUserProfileController, updateUserProfilePictureController, userLoginController, userSignupController } from '../../controllers/user/authController.js';
+import { verifyOtpController } from '../../controllers/user/otpController.js';
+import { authMiddleware } from '../../middleware/userAuthMiddleware.js';
 
 const router = Router();
 

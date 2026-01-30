@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { doctorAuthMiddleware } from "../middleware/doctorMiddleware.js";
-import { checkDoctorAuthController, doctorLoginController, doctorLogoutController, updateDoctorOwnProfileController } from "../controllers/doctor/authController.js";
+import { doctorAuthMiddleware } from "../../middleware/doctorMiddleware.js";
+import { checkDoctorAuthController, doctorLoginController, doctorLogoutController, updateDoctorOwnProfileController } from "../../controllers/doctor/authController.js";
 
 const router = Router();
 

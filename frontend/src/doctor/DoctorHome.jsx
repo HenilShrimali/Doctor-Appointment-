@@ -16,7 +16,6 @@ import {
   Moon,
   Coffee,
   Loader,
-  Heart,
 } from "lucide-react";
 
 function DoctorHome() {

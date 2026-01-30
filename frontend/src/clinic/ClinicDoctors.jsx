@@ -150,10 +150,10 @@ function ClinicDoctors() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl p-6 text-white shadow-lg transform hover:scale-105 transition-all duration-300">
+          <div className="bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl p-6 text-white shadow-lg transform hover:scale-105 transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-blue-100 text-sm font-semibold mb-1">
+                <p className="text-teal-100 text-sm font-semibold mb-1">
                   Total Doctors
                 </p>
                 <p className="text-4xl font-black">{doctors.length}</p>
@@ -167,7 +167,7 @@ function ClinicDoctors() {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-6 text-white shadow-lg transform hover:scale-105 transition-all duration-300">
+          <div className="bg-cyan-600 rounded-2xl p-6 text-white shadow-lg transform hover:scale-105 transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-emerald-100 text-sm font-semibold mb-1">
@@ -182,7 +182,7 @@ function ClinicDoctors() {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl p-6 text-white shadow-lg transform hover:scale-105 transition-all duration-300">
+          <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-6 text-white shadow-lg transform hover:scale-105 transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-purple-100 text-sm font-semibold mb-1">
@@ -203,7 +203,7 @@ function ClinicDoctors() {
         </div>
 
         <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
-          <div className="bg-gradient-to-r from-blue-600 to-cyan-600 px-6 py-6">
+          <div className="bg-teal-600 px-6 py-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <h2 className="text-2xl font-bold text-white flex items-center gap-2">
                 <Award className="w-6 h-6" />
@@ -357,10 +357,11 @@ function ClinicDoctors() {
                         onClick={() => handleToggleStatus(doctor._id)}
                         className={`flex-1 flex items-center justify-center gap-1 px-3 py-2 rounded-lg transition text-sm font-semibold
                               ${
-                       doctor.isActive
-                          ? "bg-red-100 text-red-700 hover:bg-red-200"
-                          : "bg-green-100 text-green-700 hover:bg-green-200"
-                      }`}>
+                                doctor.isActive
+                                  ? "bg-red-100 text-red-700 hover:bg-red-200"
+                                  : "bg-green-100 text-green-700 hover:bg-green-200"
+                              }`}
+                      >
                         {doctor.isActive ? (
                           <>
                             <XCircle className="w-4 h-4" />
@@ -589,236 +590,236 @@ function ClinicDoctors() {
       )}
 
       {showEditModal && selectedDoctor && (
-  <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-    <div className="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-      <div className="sticky top-0 bg-gradient-to-r from-purple-600 to-pink-600 px-8 py-6 flex items-center justify-between rounded-t-3xl z-10">
-        <h3 className="text-2xl font-bold text-white flex items-center gap-2">
-          <Edit className="w-6 h-6" />
-          Update Doctor Details
-        </h3>
-        <button
-          onClick={() => {
-            setShowEditModal(false);
-            resetForm();
-          }}
-          className="text-white hover:bg-white/20 p-2 rounded-xl transition"
-        >
-          <X className="w-6 h-6" />
-        </button>
-      </div>
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div className="sticky top-0 bg-gradient-to-r from-purple-600 to-pink-600 px-8 py-6 flex items-center justify-between rounded-t-3xl z-10">
+              <h3 className="text-2xl font-bold text-white flex items-center gap-2">
+                <Edit className="w-6 h-6" />
+                Update Doctor Details
+              </h3>
+              <button
+                onClick={() => {
+                  setShowEditModal(false);
+                  resetForm();
+                }}
+                className="text-white hover:bg-white/20 p-2 rounded-xl transition"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
 
-      <form onSubmit={handleUpdate} className="p-8 space-y-6 text-black">
-        <div className="flex justify-center">
-          <div className="relative">
-            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center overflow-hidden ring-4 ring-purple-200">
-              {formData.profilePicture ? (
-                <img
-                  src={formData.profilePicture}
-                  alt="Preview"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white font-bold text-4xl">
-                  {formData.name?.charAt(0) || "D"}
+            <form onSubmit={handleUpdate} className="p-8 space-y-6 text-black">
+              <div className="flex justify-center">
+                <div className="relative">
+                  <div className="w-32 h-32 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center overflow-hidden ring-4 ring-purple-200">
+                    {formData.profilePicture ? (
+                      <img
+                        src={formData.profilePicture}
+                        alt="Preview"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white font-bold text-4xl">
+                        {formData.name?.charAt(0) || "D"}
+                      </div>
+                    )}
+                  </div>
+                  <label className="absolute bottom-0 right-0 bg-white p-3 rounded-full shadow-lg cursor-pointer hover:bg-purple-50 transition ring-2 ring-purple-200">
+                    <Camera className="w-5 h-5 text-purple-600" />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                    />
+                  </label>
                 </div>
-              )}
-            </div>
-            <label className="absolute bottom-0 right-0 bg-white p-3 rounded-full shadow-lg cursor-pointer hover:bg-purple-50 transition ring-2 ring-purple-200">
-              <Camera className="w-5 h-5 text-purple-600" />
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="hidden"
-              />
-            </label>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                    <User className="w-4 h-4 text-purple-600" />
+                    Doctor's Name *
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-lg"
+                    placeholder="Dr. John Doe"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                    <Mail className="w-4 h-4 text-purple-600" />
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-lg"
+                    placeholder="doctor@example.com"
+                  />
+                </div>
+
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Password (Leave blank to keep current password)
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                      minLength="6"
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-lg pr-32"
+                      placeholder="Enter new password (min. 6 chars)"
+                    />
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-500 bg-white px-2">
+                      Optional
+                    </span>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-purple-600" />
+                    Phone *
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-lg"
+                    placeholder="+91 1234567890"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                    <Award className="w-4 h-4 text-purple-600" />
+                    Specialization *
+                  </label>
+                  <input
+                    type="text"
+                    name="specialization"
+                    value={formData.specialization}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-lg"
+                    placeholder="e.g., Cardiologist"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                    <GraduationCap className="w-4 h-4 text-purple-600" />
+                    Qualification *
+                  </label>
+                  <input
+                    type="text"
+                    name="qualification"
+                    value={formData.qualification}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-lg"
+                    placeholder="e.g., MBBS, MD"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                    <Briefcase className="w-4 h-4 text-purple-600" />
+                    Experience (years) *
+                  </label>
+                  <input
+                    type="number"
+                    name="experience"
+                    value={formData.experience}
+                    onChange={handleInputChange}
+                    required
+                    min="0"
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-lg"
+                    placeholder="10"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                    <DollarSign className="w-4 h-4 text-purple-600" />
+                    Consultation Fee (₹) *
+                  </label>
+                  <input
+                    type="number"
+                    name="consultationFee"
+                    value={formData.consultationFee}
+                    onChange={handleInputChange}
+                    required
+                    min="0"
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-lg"
+                    placeholder="500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                  <Heart className="w-4 h-4 text-purple-600" />
+                  Bio (Tell patients about this doctor's expertise and approach)
+                </label>
+                <textarea
+                  name="bio"
+                  value={formData.bio}
+                  onChange={handleInputChange}
+                  rows="4"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition resize-none text-lg"
+                  placeholder="Dr. Sarah loves helping families stay healthy and happy..."
+                />
+              </div>
+
+              <div className="flex gap-4 pt-4">
+                <button
+                  type="submit"
+                  disabled={isUpdatingDoctor}
+                  className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl font-bold text-lg hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:scale-[1.02] duration-200"
+                >
+                  {isUpdatingDoctor ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <Loader className="w-5 h-5 animate-spin" />
+                      Updating...
+                    </span>
+                  ) : (
+                    <span className="flex items-center justify-center gap-2">
+                      <CheckCircle className="w-5 h-5" />
+                      Save Changes
+                    </span>
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowEditModal(false);
+                    resetForm();
+                  }}
+                  disabled={isUpdatingDoctor}
+                  className="px-8 bg-gray-200 text-gray-700 py-4 rounded-xl font-bold text-lg hover:bg-gray-300 transition-all disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-              <User className="w-4 h-4 text-purple-600" />
-              Doctor's Name *
-            </label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              required
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-lg"
-              placeholder="Dr. John Doe"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-              <Mail className="w-4 h-4 text-purple-600" />
-              Email *
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-lg"
-              placeholder="doctor@example.com"
-            />
-          </div>
-
-          <div className="md:col-span-2">
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Password (Leave blank to keep current password)
-            </label>
-            <div className="relative">
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                minLength="6"
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-lg pr-32"
-                placeholder="Enter new password (min. 6 chars)"
-              />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-500 bg-white px-2">
-                Optional
-              </span>
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-              <Phone className="w-4 h-4 text-purple-600" />
-              Phone *
-            </label>
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleInputChange}
-              required
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-lg"
-              placeholder="+91 1234567890"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-              <Award className="w-4 h-4 text-purple-600" />
-              Specialization *
-            </label>
-            <input
-              type="text"
-              name="specialization"
-              value={formData.specialization}
-              onChange={handleInputChange}
-              required
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-lg"
-              placeholder="e.g., Cardiologist"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-              <GraduationCap className="w-4 h-4 text-purple-600" />
-              Qualification *
-            </label>
-            <input
-              type="text"
-              name="qualification"
-              value={formData.qualification}
-              onChange={handleInputChange}
-              required
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-lg"
-              placeholder="e.g., MBBS, MD"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-              <Briefcase className="w-4 h-4 text-purple-600" />
-              Experience (years) *
-            </label>
-            <input
-              type="number"
-              name="experience"
-              value={formData.experience}
-              onChange={handleInputChange}
-              required
-              min="0"
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-lg"
-              placeholder="10"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-              <DollarSign className="w-4 h-4 text-purple-600" />
-              Consultation Fee (₹) *
-            </label>
-            <input
-              type="number"
-              name="consultationFee"
-              value={formData.consultationFee}
-              onChange={handleInputChange}
-              required
-              min="0"
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-lg"
-              placeholder="500"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-            <Heart className="w-4 h-4 text-purple-600" />
-            Bio (Tell patients about this doctor's expertise and approach)
-          </label>
-          <textarea
-            name="bio"
-            value={formData.bio}
-            onChange={handleInputChange}
-            rows="4"
-            className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition resize-none text-lg"
-            placeholder="Dr. Sarah loves helping families stay healthy and happy..."
-          />
-        </div>
-
-        <div className="flex gap-4 pt-4">
-          <button
-            type="submit"
-            disabled={isUpdatingDoctor}
-            className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl font-bold text-lg hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:scale-[1.02] duration-200"
-          >
-            {isUpdatingDoctor ? (
-              <span className="flex items-center justify-center gap-2">
-                <Loader className="w-5 h-5 animate-spin" />
-                Updating...
-              </span>
-            ) : (
-              <span className="flex items-center justify-center gap-2">
-                <CheckCircle className="w-5 h-5" />
-                Save Changes 
-              </span>
-            )}
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setShowEditModal(false);
-              resetForm();
-            }}
-            disabled={isUpdatingDoctor}
-            className="px-8 bg-gray-200 text-gray-700 py-4 rounded-xl font-bold text-lg hover:bg-gray-300 transition-all disabled:opacity-50"
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
       )}
     </div>
   );  

@@ -1,5 +1,5 @@
 import {Router} from "express"
-import { approveClinicController, getAllClinicsController, getAllDoctorsController, getAllUsersController, getPendingClinicsController, rejectClinicController } from "../controllers/admin/adminControllers.js";
+import { approveClinicController, getAllClinicsController, getAllDoctorsController, getAllUsersController, getPendingClinicsController, rejectClinicController } from "../../controllers/admin/adminControllers.js";
 
 const router = Router();
 

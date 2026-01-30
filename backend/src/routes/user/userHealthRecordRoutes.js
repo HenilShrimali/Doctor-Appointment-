@@ -1,6 +1,6 @@
 import {Router} from "express"
-import { authMiddleware } from "../middleware/userAuthMiddleware.js";
-import { addFilesToRecordController, deleteFileFromRecordController, deleteHealthRecordController, getHealthRecordByIdController, getUserHealthRecordsController, updateHealthRecordController, uploadHealthRecordsController } from "../controllers/user/healthRecordController.js";
+import { authMiddleware } from "../../middleware/userAuthMiddleware.js";
+import { addFilesToRecordController, deleteFileFromRecordController, deleteHealthRecordController, getHealthRecordByIdController, getUserHealthRecordsController, updateHealthRecordController, uploadHealthRecordsController } from "../../controllers/user/healthRecordController.js";
 
 const router = Router()
 

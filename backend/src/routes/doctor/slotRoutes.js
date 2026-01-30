@@ -1,6 +1,6 @@
 import { Router } from "express";
-import {doctorAuthMiddleware} from "../middleware/doctorMiddleware.js";
-import { createBulkTimeSlots, createTimeSlot, deleteBulkTimeSlots, deleteTimeSlot, getScheduleStats, getTimeSlots, updateTimeSlot } from "../controllers/doctor/slotController.js";
+import {doctorAuthMiddleware} from "../../middleware/doctorMiddleware.js";
+import { createBulkTimeSlots, createTimeSlot, deleteBulkTimeSlots, deleteTimeSlot, getScheduleStats, getTimeSlots, updateTimeSlot } from "../../controllers/doctor/slotController.js";
 
 const router = Router();
 

@@ -6,8 +6,8 @@ import {
   cancelAppointment,
   getAvailableDoctors,
   getDoctorAvailableSlots,
-} from "../controllers/user/appointmentController.js";
-import {authMiddleware} from "../middleware/userAuthMiddleware.js"
+} from "../../controllers/user/appointmentController.js";
+import {authMiddleware} from "../../middleware/userAuthMiddleware.js"
 
 const router = express.Router();
 

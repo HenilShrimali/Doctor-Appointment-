@@ -3,8 +3,8 @@ import {
   createRazorpayOrder,
   verifyRazorpayPayment,
   getRazorpayKey,
-} from "../controllers/paymentController.js";
-import { authMiddleware } from "../middleware/userAuthMiddleware.js";
+} from "../../controllers/paymentController.js";
+import { authMiddleware } from "../../middleware/userAuthMiddleware.js";
 
 const router = express.Router();
 

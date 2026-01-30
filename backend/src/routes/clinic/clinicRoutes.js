@@ -1,6 +1,6 @@
 import {Router} from "express"
-import { checkAuth, clinicLoginController, clinicLogoutController, clinicSignupController, updateClinicProfileController, updateClinicProfilePictureController } from "../controllers/clinic/authController.js"
-import { clinicAuthMiddleware } from "../middleware/clinicAuthMiddleware.js"
+import { checkAuth, clinicLoginController, clinicLogoutController, clinicSignupController, updateClinicProfileController, updateClinicProfilePictureController } from "../../controllers/clinic/authController.js"
+import { clinicAuthMiddleware } from "../../middleware/clinicAuthMiddleware.js"
 
 const router = Router()
 

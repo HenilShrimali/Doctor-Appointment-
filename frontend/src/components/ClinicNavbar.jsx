@@ -41,7 +41,7 @@ function ClinicNavbar() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <Link to="/clinicHome" className="flex items-center space-x-2">
-              <div className="bg-blue-600 p-2 rounded-lg">
+              <div className="bg-teal-600 p-2 rounded-lg">
                 <Building2 className="h-6 w-6 text-white" />
               </div>
               <div className="hidden sm:block">
@@ -63,8 +63,8 @@ function ClinicNavbar() {
                   to={link.path}
                   className={`flex items-center space-x-1 px-3 py-2 rounded-lg font-medium transition ${
                     isActive
-                      ? "bg-blue-600 text-white"
-                      : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                      ? "bg-teal-600 text-white"
+                      : "text-gray-700 hover:bg-teal-50 hover:text-teal-600"
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -85,7 +85,7 @@ function ClinicNavbar() {
                 onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
                 className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 transition"
               >
-                <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center">
+                <div className="h-8 w-8 rounded-full bg-teal-600 flex items-center justify-center">
                   {clinic?.profilePicture ? (
                     <img
                       src={clinic.profilePicture}

@@ -1,6 +1,6 @@
 import {Router} from "express";
-import { addDoctorController, getDoctorController, getDoctorsController, toggleDoctorStatusController, updateDoctorController } from "../controllers/doctor/authController.js";
-import { clinicAuthMiddleware } from "../middleware/clinicAuthMiddleware.js";
+import { addDoctorController, getDoctorController, getDoctorsController, toggleDoctorStatusController, updateDoctorController } from "../../controllers/doctor/authController.js";
+import { clinicAuthMiddleware } from "../../middleware/clinicAuthMiddleware.js";
 
 const router = Router();
 
