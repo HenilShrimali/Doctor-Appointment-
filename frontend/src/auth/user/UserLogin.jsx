@@ -65,7 +65,7 @@ export default function UserLogin() {
         <div className="w-full max-w-md">
           <div className="bg-white/60 backdrop-blur-sm border border-white/50 rounded-2xl shadow-lg p-6 sm:p-8 md:p-10">
             <div className="text-center mb-8 sm:mb-10">
-              <div className="inline-flex items-center justify-center mb-4 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg">
+              <div className="inline-flex items-center justify-center mb-4 w-14 h-14 sm:w-16 sm:h-16 bg-teal-600 rounded-xl shadow-lg">
                 <LogIn className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-3">
@@ -95,8 +95,8 @@ export default function UserLogin() {
                       errors.email
                         ? "border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
                         : focusedField === "email"
-                          ? "border-blue-400 focus:ring-2 focus:ring-blue-500/20"
-                          : "border-slate-200 hover:border-slate-300 focus:border-blue-500"
+                          ? "border-teal-600 focus:ring-2 focus:ring-teal-500/20"
+                          : "border-slate-200 hover:border-slate-300 focus:border-teal-600"
                     } focus:outline-none`}
                   />
                 </div>
@@ -127,7 +127,7 @@ export default function UserLogin() {
                         ? "border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
                         : focusedField === "password"
                           ? "border-blue-400 focus:ring-2 focus:ring-blue-500/20"
-                          : "border-slate-200 hover:border-slate-300 focus:border-blue-500"
+                          : "border-slate-200 hover:border-slate-300 focus:border-teal-600"
                     } focus:outline-none`}
                   />
                   <button
@@ -153,7 +153,7 @@ export default function UserLogin() {
               <button
                 type="submit"
                 disabled={isLoggingIn}
-                className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed text-white font-semibold py-3 sm:py-3.5 rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-95 text-sm sm:text-base mt-8 sm:mt-10 shadow-lg hover:shadow-xl"
+                className="w-full bg-teal-600 hover:bg-teal-700 disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed text-white font-semibold py-3 sm:py-3.5 rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-95 text-sm sm:text-base mt-8 sm:mt-10 shadow-lg hover:shadow-xl"
               >
                 {isLoggingIn ? (
                   <span className="flex items-center justify-center gap-2">
@@ -190,7 +190,7 @@ export default function UserLogin() {
                 Don't have an account?{" "}
                 <button
                   onClick={() => navigate("/userSignup")}
-                  className="text-blue-600 hover:text-blue-700 font-semibold hover:underline transition-colors"
+                  className="text-teal-600 hover:text-teal-700 font-semibold hover:underline transition-colors"
                 >
                   Create Account
                 </button>

@@ -212,7 +212,7 @@ function Doctors() {
 
                     <button
                       onClick={() => handleView(doctor)}
-                      className="w-full md:w-auto px-6 py-2.5 bg-gray-900 text-white rounded-xl hover:bg-purple-600 transition-colors flex items-center justify-center gap-2 font-medium"
+                      className="w-full md:w-auto px-6 py-2.5 bg-teal-700 text-white rounded-xl hover:bg-purple-600 transition-colors flex items-center justify-center gap-2 font-medium"
                     >
                       <Eye className="w-4 h-4" /> View details
                     </button>

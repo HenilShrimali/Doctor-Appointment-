@@ -1,5 +1,5 @@
 import {Router} from "express"
-import { approveClinicController, getAllClinicsController, getAllDoctorsController, getAllUsersController, getPendingClinicsController, rejectClinicController } from "../../controllers/admin/adminControllers.js";
+import { approveClinicController, getAllAppointmentsController, getAllClinicsController, getAllDoctorsController, getAllUsersController, getAppointmentByIdController, getAppointmentStatsController, getPendingClinicsController, rejectClinicController } from "../../controllers/admin/adminControllers.js";
 
 const router = Router();
 
@@ -9,5 +9,8 @@ router.put("/clinic/reject/:clinicId",rejectClinicController,);
 router.get("/users",getAllUsersController)
 router.get("/clinic",getAllClinicsController)
 router.get("/doctors",getAllDoctorsController)
+router.get("/appointments", getAllAppointmentsController);
+router.get("/appointments/stats", getAppointmentStatsController);
+router.get("/appointments/:id", getAppointmentByIdController);
 
 export default router;

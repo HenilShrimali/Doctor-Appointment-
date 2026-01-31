@@ -7,6 +7,8 @@ export const useAdminStore = create((set) => ({
   clinics: [],
   users: [],
   doctors: [],
+  appointments: [],
+  stats:null,
   isLoading: false,
 
   fetchPendingClinics: async () => {
@@ -81,4 +83,46 @@ export const useAdminStore = create((set) => ({
     }
   },
 
+  getAppointments: async (filters = {}) => {
+    set({ isLoading: true });
+    try {
+      const params = new URLSearchParams();
+      if (filters.status) params.append("status", filters.status);
+      if (filters.clinicId) params.append("clinicId", filters.clinicId);
+      if (filters.doctorId) params.append("doctorId", filters.doctorId);
+      if (filters.date) params.append("date", filters.date);
+
+      const res = await axiosInstance.get(`/admin/appointments?${params}`);
+      set({ appointments: res.data.data });
+    } catch (error) {
+      toast.error("Failed to fetch appointments");
+      console.error(error);
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  getAppointmentStats: async () => {
+    try {
+      const res = await axiosInstance.get("/admin/appointments/stats");
+      set({ stats: res.data.data });
+    } catch (error) {
+      console.error("Failed to fetch stats:", error);
+    }
+  },
+
+  getAppointmentById: async (appointmentId) => {
+    set({ isLoading: true });
+    try {
+      const res = await axiosInstance.get(
+        `/admin/appointments/${appointmentId}`,
+      );
+      return res.data.data;
+    } catch (error) {
+      toast.error("Failed to fetch appointment details");
+      throw error;
+    } finally {
+      set({ isLoading: false });
+    }
+  },
 }));
