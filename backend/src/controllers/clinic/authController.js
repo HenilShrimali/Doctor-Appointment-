@@ -73,7 +73,7 @@ export const clinicLoginController = async (req, res) => {
 
     res.status(200).json({
       message: "Clinic login successful",
-      clinic: {
+      data: {
         _id: clinic._id,
         clinicName: clinic.clinicName,
         email: clinic.email,

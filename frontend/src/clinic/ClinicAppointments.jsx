@@ -6,9 +6,7 @@ import {
   User,
   Stethoscope,
   Search,
-  Filter,
   Download,
-  TrendingUp,
   DollarSign,
   CheckCircle,
   XCircle,
@@ -465,7 +463,7 @@ function ClinicAppointments() {
                       setShowDetailsModal(false);
                       setSelectedAppointment(null);
                     }}
-                    className="text-gray-400 hover:text-gray-600"
+                    className="text-gray-400 hover:text-gray-600 hover:rotate-180 transition-transform duration-200"
                   >
                     <XCircle className="w-6 h-6" />
                   </button>
