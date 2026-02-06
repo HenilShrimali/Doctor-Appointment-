@@ -32,6 +32,16 @@ function UserHome() {
     "🌞 Get some sunshine for vitamin D!",
     "🥦 Eat colorful vegetables for better nutrition!",
     "💪 Stay active, stay healthy!",
+    "🚶‍♀️ A short walk after meals helps digestion!",
+    "🧠 Keep your mind sharp by learning something new!",
+    "🥛 Include calcium-rich foods for strong bones!",
+    "📵 Take breaks from screens to protect your eyes!",
+    "🫀 Manage stress to keep your heart healthy!",
+    "🍽️ Eat slowly and mindfully!",
+    "🪥 Brush and floss daily for a healthy smile!",
+    "🕒 Maintain a regular sleep schedule!",
+    "🤸 Stretch daily to improve flexibility!",
+    "🍋 Start your day with warm water for better metabolism!",
   ];
 
   useEffect(() => {

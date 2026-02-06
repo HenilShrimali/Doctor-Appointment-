@@ -24,7 +24,8 @@ function BookAppointment() {
   const location = useLocation();
   const { user } = useUserAuthStore();
   const { getDoctorAvailableSlots, availableSlots, isLoading, createAppointment, uploadReports } = useAppointmentStore();
-  const { initializeRazorpay, createOrder, processPayment } = usePaymentStore();
+  const { initializeRazorpay, createOrder, processPayment } =
+    usePaymentStore();
 
   const [selectedDate, setSelectedDate] = useState(
     location.state?.selectedDate || new Date().toISOString().split('T')[0]

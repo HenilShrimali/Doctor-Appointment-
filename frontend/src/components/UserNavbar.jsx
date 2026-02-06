@@ -110,9 +110,12 @@ function UserNavbar() {
                   : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
               }`}
             >
-              <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full flex items-center justify-center shadow-sm">
-                <User className="w-4 h-4 text-white" />
-              </div>
+             
+                {user?.profilePicture? <img src={user?.profilePicture} alt="" className="size-8 btn-circle"/>: 
+                 <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full flex items-center justify-center shadow-sm">
+                <User className="w-4 h-4 text-white" /> 
+                </div>}
+              
               <span className="max-w-[100px] truncate">
                 {user?.name?.split(" ")[0] || "Profile"}
               </span>

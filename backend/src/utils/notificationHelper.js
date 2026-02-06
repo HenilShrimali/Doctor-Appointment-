@@ -100,7 +100,7 @@ export const notifyNewAppointment = async (appointment) => {
       message: `Your appointment with Dr. ${doctorName} on ${appointmentDate} at ${startTime} is confirmed.`,
       type: "appointment_confirmed",
       icon: "check",
-      link: "/userAppointments",
+      link: "/myAppointments",
       data: {
         appointmentId: appointment._id.toString(),
         doctorName,
