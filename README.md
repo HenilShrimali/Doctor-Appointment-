@@ -3,7 +3,7 @@
 A modern full-stack **Doctor Appointment System** that enables patients to book appointments, doctors to manage schedules, clinics to streamline operations, and admins to control the platform.  
 The system is built with a clean UI, secure authentication, real-time notifications, and scalable architecture.
 
-> **Status:** ✅ Completed
+> **Status:** Completed
 
 ---
 
