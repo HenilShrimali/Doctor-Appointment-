@@ -225,3 +225,50 @@ export const checkAuth = async (req, res) => {
     console.log(error.message, "Internal server error");
   }
 };
+
+export const updateClinicPasswordController = async(req,res)=>{
+  try {
+    const {email,newPassword,confirmPassword} = req.body;
+
+    if(!email || !newPassword || !confirmPassword){
+       return res.status(400).json({
+         success: false,
+         message: "All fields are required",
+       });
+    }
+
+    if(newPassword !== confirmPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "Passwords do not match",
+      });
+    }
+
+    const clinic = await CLINIC.findOne({email})
+
+    if(!clinic){
+        return res.status(404).json({
+          success: false,
+          message: "clinic not found",
+        });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    clinic.password = hashedPassword;
+    await clinic.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Password updated successfully",
+    });
+    
+  } catch (error) {
+     console.error("Update user password error:", error);
+     res.status(500).json({
+       success: false,
+       message: "Error updating password",
+       error: error.message,
+     });
+  }
+}

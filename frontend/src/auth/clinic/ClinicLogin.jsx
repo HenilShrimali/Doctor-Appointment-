@@ -30,7 +30,7 @@ function ClinicLogin() {
         {/* Header */}
         <div className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="bg-blue-600 p-4 rounded-full">
+            <div className="bg-emerald-600 p-4 rounded-full">
               <Building2 className="h-10 w-10 text-white" />
             </div>
           </div>
@@ -40,7 +40,6 @@ function ClinicLogin() {
           </p>
         </div>
 
-        {/* Form Card */}
         <div className="bg-white rounded-2xl shadow-xl p-6">
           <form onSubmit={handleSubmit} className="space-y-5 text-black">
             {/* Email Input */}
@@ -62,7 +61,6 @@ function ClinicLogin() {
               </div>
             </div>
 
-            {/* Password Input */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Password
@@ -90,13 +88,18 @@ function ClinicLogin() {
                   )}
                 </button>
               </div>
+              <Link
+                to={"/clinic/changePassword"}
+                className="text-emerald-600 text-sm hover:underline"
+              >
+                Forget Password
+              </Link>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={isClinicLoggingIn}
-              className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+              className="w-full bg-emerald-600 text-white py-3 rounded-lg font-semibold hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
             >
               {isClinicLoggingIn ? (
                 <span className="flex items-center justify-center">
@@ -128,13 +131,12 @@ function ClinicLogin() {
             </button>
           </form>
 
-          {/* Signup Link */}
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
               Don't have an account?{" "}
               <Link
                 to="/clinicSignup"
-                className="font-medium text-blue-600 hover:text-blue-700 transition"
+                className="font-medium text-emerald-600 hover:text-emerald-700 transition"
               >
                 Register your clinic
               </Link>

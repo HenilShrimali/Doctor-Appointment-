@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Mail, Lock, Eye, EyeOff, ArrowLeft, LogIn } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUserAuthStore } from "../../store/userAuthStore.js";
 
 export default function UserLogin() {
@@ -60,7 +60,6 @@ export default function UserLogin() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-green-50 overflow-y-auto">
-
       <div className="relative z-10 flex items-center justify-center px-3 sm:px-4 py-12 sm:py-16 md:py-20">
         <div className="w-full max-w-md">
           <div className="bg-white/60 backdrop-blur-sm border border-white/50 rounded-2xl shadow-lg p-6 sm:p-8 md:p-10">
@@ -141,6 +140,7 @@ export default function UserLogin() {
                       <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
                     )}
                   </button>
+                  <Link to={"/user/changePassword"} className="text-teal-600 hover:underline text-sm">Forget Password</Link>
                 </div>
                 {errors.password && (
                   <p className="text-red-500 text-xs mt-2 flex items-center gap-1">

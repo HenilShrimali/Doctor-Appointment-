@@ -18,6 +18,7 @@ import clinicAppointmentRoutes from './routes/clinic/clinicAppointmentRoutes.js'
 import clinicPatientsRoutes from './routes/clinic/clinicPatientRoutes.js';
 import notificationRoutes from "./routes/notificationRoutes.js"
 import fcmTokenRoutes from "./routes/tokenRoutes.js"
+import forgetPasswordRoutes from "./routes/forgetPasswordRoutes.js"
 import cors from 'cors';
 import cookieParser from "cookie-parser";
 import { startAllReminderCrons } from "./utils/reminder.js";
@@ -61,6 +62,7 @@ app.use("/api/clinic/appointments",clinicAppointmentRoutes)
 app.use("/api/clinic/patients",clinicPatientsRoutes)
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/fcm-token', fcmTokenRoutes);
+app.use("/api/forgetPassword",forgetPasswordRoutes)
 
 app.listen(PORT, () => {
   console.log(`SERVER IS RUNNING ON PORT ${PORT}`);

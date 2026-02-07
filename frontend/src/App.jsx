@@ -43,6 +43,8 @@ import DoctorPatients from './doctor/DoctorPatients.jsx';
 import NotFound from './NotFound.jsx';
 import ViewDoctorProfile from './user/ViewDoctorProfile.jsx';
 import BookAppointment from './user/BookAppintment.jsx';
+import ChangePassword from './ChangePassword.jsx';
+import ChangeClinicPassword from './ChangeClinicPassword.jsx';
 
 function App() {
   const { user, isUserAuthenticated, isLoggedIn, checkAuth, isAuthLoading } =
@@ -82,6 +84,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
 
           {/* User routes */}
+          <Route path="/user/changePassword" element={<ChangePassword />} />
           <Route
             path="/userSignup"
             element={
@@ -287,6 +290,7 @@ function App() {
           />
 
           {/* Clinic Routes */}
+          <Route path='/clinic/changePassword' element={<ChangeClinicPassword />}/>
           <Route
             path="/clinicSignup"
             element={

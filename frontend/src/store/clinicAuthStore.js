@@ -68,8 +68,8 @@ export const useClinicAuthStore = create((set) => ({
         clinic: null,
         isClinicAuthenticated: false,
       });
-    }finally{
-        set({ isClinicAuthLoading: false });
+    } finally {
+      set({ isClinicAuthLoading: false });
     }
   },
 
@@ -95,6 +95,24 @@ export const useClinicAuthStore = create((set) => ({
       toast.success("Profile picture updated");
     } catch (error) {
       toast.error(error.response?.data?.message || "Image upload failed");
+    }
+  },
+
+  updateClinicPassword: async (clinicData) => {
+    try {
+      const res = await axiosInstance.put(
+        "/clinic/updatePassword",
+        clinicData
+      );
+      return res.data;
+    } catch (error) {
+      console.error("Update clinic password error:", error);
+      return {
+        success: false,
+        message:
+          error?.response?.data?.message ||
+          "Something went wrong while updating clinic password",
+      };
     }
   },
 
