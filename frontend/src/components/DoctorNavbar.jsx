@@ -51,7 +51,7 @@ function DoctorNavbar() {
               </div>
               <div className="hidden sm:block">
                 <h1 className="text-xl font-bold text-gray-900">
-                  {doctor?.name?.split(" ").pop() || "Portal"}
+                  Dr.{doctor?.name?.split(" ").pop() || "Portal"}
                 </h1>
                 <p className="text-xs text-gray-500">Healthcare Professional</p>
               </div>

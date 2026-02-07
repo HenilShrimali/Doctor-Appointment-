@@ -1,89 +1,92 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import axios from "axios";
 import toast from "react-hot-toast";
-import { axiosInstance } from "../api/api";
-
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA4_LxSn8c-52ZpjJ2nOHXnm0SbgLsHZrM",
-  authDomain: "doctrek---doctor-appointment.firebaseapp.com",
-  projectId: "doctrek---doctor-appointment",
-  storageBucket: "doctrek---doctor-appointment.firebasestorage.app",
-  messagingSenderId: "149508306728",
-  appId: "1:149508306728:web:928c151738030b5502c21d",
-  measurementId: "G-G70KCPLY9N",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 
-export const requestNotificationPermission = async (userType) => {
-  try {
-    if (!("Notification" in window)) {
-      console.log("This browser does not support notifications");
-      return null;
-    }
-
-    if (!("serviceWorker" in navigator)) {
-      console.log("Service Worker not supported");
-      return null;
-    }
-
-    const permission = await Notification.requestPermission();
-
-    if (permission === "granted") {
-      console.log("Notification permission granted");
-
-      const token = await getToken(messaging, {
-        vapidKey: "YOUR_VAPID_KEY_HERE",
-      });
-
-      if (token) {
-        console.log("FCM Token received");
-
-        await saveFCMToken(token, userType);
-
-        return token;
-      } else {
-        console.log("No FCM token available");
-        return null;
-      }
-    } else if (permission === "denied") {
-      console.log("Notification permission denied");
-      toast.error("Please enable notifications to receive updates");
-      return null;
-    } else {
-      console.log("Notification permission dismissed");
-      return null;
-    }
-  } catch (error) {
-    console.error("Error requesting notification permission:", error);
-    return null;
-  }
-};
-
-
 const saveFCMToken = async (token, userType) => {
   try {
-    await axiosInstance.post(
-      `/fcm-token/${userType}/save`,
+    await axios.post(
+      `http://localhost:5000/api/fcm-token/${userType}/save`,
       { token, device: "web" },
       { withCredentials: true },
     );
-    console.log("FCM token saved to backend");
+    console.log("FCM token saved");
   } catch (error) {
     console.error("Error saving FCM token:", error);
   }
 };
 
+
+export const requestNotificationPermission = async (userType) => {
+  try {
+    if (!("Notification" in window)) {
+      return null;
+    }
+
+    if (!("serviceWorker" in navigator)) {
+      return null;
+    }
+
+    const currentPermission = Notification.permission;
+
+    if (currentPermission === "granted") {
+      const token = await getToken(messaging, {
+        vapidKey:import.meta.env.VITE_FIREBASE_VAPID_KEY,
+      });
+
+      if (token) {
+        await saveFCMToken(token, userType);
+        return token;
+      }
+      return null;
+    }
+
+    if (currentPermission === "denied") {
+      return null;
+    }
+
+    if (currentPermission === "default") {
+      const permission = await Notification.requestPermission();
+
+      if (permission === "granted") {
+        const token = await getToken(messaging, {
+          vapidKey:import.meta.env.VITE_FIREBASE_VAPID_KEY,
+        });
+
+        if (token) {
+          await saveFCMToken(token, userType);
+          return token;
+        }
+      }
+      return null;
+    }
+  } catch (error) {
+    console.error("Notification error:", error);
+    return null;
+  }
+};
+
 export const removeFCMToken = async (token, userType) => {
   try {
-    await axiosInstance.post(
-      `/fcm-token/${userType}/remove`,
+    await axios.post(
+      `http://localhost:5000/api/fcm-token/${userType}/remove`,
       { token },
       { withCredentials: true },
     );
-    console.log("FCM token removed from backend");
+    console.log("FCM token removed");
   } catch (error) {
     console.error("Error removing FCM token:", error);
   }
@@ -91,8 +94,6 @@ export const removeFCMToken = async (token, userType) => {
 
 export const listenForMessages = (onMessageReceived) => {
   onMessage(messaging, (payload) => {
-    console.log("Foreground message received:", payload);
-
     const { title, body } = payload.notification || {};
 
     if (title && body) {
@@ -150,10 +151,21 @@ export const initializeFCM = async (userType, onMessageReceived) => {
 
     if (token) {
       listenForMessages(onMessageReceived);
-      console.log("FCM initialized successfully");
     }
+
   } catch (error) {
-    console.error("Error initializing FCM:", error);
+    console.error("FCM init error:", error);
   }
 };
 
+export const requestPermissionManually = async (userType) => {
+  return await requestNotificationPermission(userType);
+};
+
+export default {
+  requestNotificationPermission,
+  removeFCMToken,
+  listenForMessages,
+  initializeFCM,
+  requestPermissionManually,
+};
