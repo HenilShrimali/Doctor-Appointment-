@@ -46,12 +46,12 @@ function ClinicSignup() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-cyan-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         {/* Header */}
         <div className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="bg-blue-600 p-3 rounded-full">
+            <div className="bg-emerald-600 p-3 rounded-full">
               <Building2 className="h-8 w-8 text-white" />
             </div>
           </div>
@@ -79,7 +79,7 @@ function ClinicSignup() {
                   value={formData.clinicName}
                   onChange={handleChange}
                   required
-                  className="pl-10 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                  className="pl-10 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
                   placeholder="Enter clinic name"
                 />
               </div>
@@ -98,7 +98,7 @@ function ClinicSignup() {
                   value={formData.ownerName}
                   onChange={handleChange}
                   required
-                  className="pl-10 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                  className="pl-10 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
                   placeholder="Enter owner name"
                 />
               </div>
@@ -118,7 +118,7 @@ function ClinicSignup() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="pl-10 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                    className="pl-10 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
                     placeholder="clinic@example.com"
                   />
                 </div>
@@ -136,7 +136,7 @@ function ClinicSignup() {
                     value={formData.phone}
                     onChange={handleChange}
                     required
-                    className="pl-10 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                    className="pl-10 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
                     placeholder="1234567890"
                   />
                 </div>
@@ -155,7 +155,7 @@ function ClinicSignup() {
                   value={formData.city}
                   onChange={handleChange}
                   required
-                  className="pl-10 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                  className="pl-10 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
                   placeholder="Enter city"
                 />
               </div>
@@ -175,7 +175,7 @@ function ClinicSignup() {
                     onChange={handleChange}
                     required
                     minLength="6"
-                    className="pl-10 pr-10 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                    className="pl-10 pr-10 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
                     placeholder="Min. 6 characters"
                   />
                   <button
@@ -205,7 +205,7 @@ function ClinicSignup() {
                     onChange={handleChange}
                     required
                     minLength="6"
-                    className="pl-10 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                    className="pl-10 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
                     placeholder="Re-enter password"
                   />
                 </div>
@@ -215,7 +215,7 @@ function ClinicSignup() {
             <button
               type="submit"
               disabled={isClinicSigningUp}
-              className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+              className="w-full bg-emerald-600 text-white py-3 rounded-lg font-semibold hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
             >
               {isClinicSigningUp ? (
                 <span className="flex items-center justify-center">
@@ -252,15 +252,15 @@ function ClinicSignup() {
               Already have an account?{" "}
               <Link
                 to="/clinicLogin"
-                className="font-medium text-blue-600 hover:text-blue-700 transition"
+                className="font-medium text-emerald-600 hover:text-emerald-700 transition"
               >
                 Login here
               </Link>
             </p>
           </div>
 
-          <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-3">
-            <p className="text-xs text-blue-800">
+          <div className="mt-4 bg-emerald-50 border border-emerald-200 rounded-lg p-3">
+            <p className="text-xs text-emerald-800">
               <strong>Note:</strong> Your registration will be reviewed by our
               admin team. You'll receive a confirmation email once approved.
             </p>

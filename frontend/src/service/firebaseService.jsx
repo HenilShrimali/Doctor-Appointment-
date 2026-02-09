@@ -4,13 +4,13 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+  apiKey: "AIzaSyA4_LxSn8c-52ZpjJ2nOHXnm0SbgLsHZrM",
+  authDomain: "doctrek---doctor-appointment.firebaseapp.com",
+  projectId: "doctrek---doctor-appointment",
+  storageBucket: "doctrek---doctor-appointment.firebasestorage.app",
+  messagingSenderId: "149508306728",
+  appId: "1:149508306728:web:928c151738030b5502c21d",
+  measurementId: "G-G70KCPLY9N",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -18,63 +18,169 @@ const messaging = getMessaging(app);
 
 const saveFCMToken = async (token, userType) => {
   try {
-    await axios.post(
+    console.log(
+      `Saving FCM token for ${userType}:`,
+      token.substring(0, 20) + "...",
+    );
+
+    const response = await axios.post(
       `http://localhost:5000/api/fcm-token/${userType}/save`,
       { token, device: "web" },
       { withCredentials: true },
     );
-    console.log("FCM token saved");
+
+    if (response.data.success) {
+      console.log("✅ FCM token saved successfully");
+      return true;
+    } else {
+      console.error("❌ Failed to save FCM token:", response.data.message);
+      return false;
+    }
   } catch (error) {
-    console.error("Error saving FCM token:", error);
+    console.error(
+      "❌ Error saving FCM token:",
+      error.response?.data || error.message,
+    );
+    return false;
   }
 };
 
+const registerServiceWorker = async () => {
+  try {
+    if (!("serviceWorker" in navigator)) {
+      console.error("❌ Service Worker not supported");
+      return null;
+    }
+
+    await navigator.serviceWorker.register("/firebase-messaging-sw.js", {
+      scope: "/",
+      updateViaCache: "none",
+    });
+
+    console.log("✅ Service Worker registration initiated");
+
+    const registration = await navigator.serviceWorker.ready;
+    console.log("✅ Service Worker ready:", registration);
+
+    return registration;
+  } catch (error) {
+    console.error("❌ Service Worker registration failed:", error);
+    throw error;
+  }
+};
 
 export const requestNotificationPermission = async (userType) => {
   try {
     if (!("Notification" in window)) {
+      console.error("❌ Notifications not supported in this browser");
       return null;
     }
 
     if (!("serviceWorker" in navigator)) {
+      console.error("❌ Service Worker not supported");
+      return null;
+    }
+
+    console.log("🔔 Starting notification setup...");
+
+    const swRegistration = await registerServiceWorker();
+
+    if (!swRegistration) {
+      console.error("❌ Service Worker registration failed");
       return null;
     }
 
     const currentPermission = Notification.permission;
+    console.log("Current notification permission:", currentPermission);
 
     if (currentPermission === "granted") {
-      const token = await getToken(messaging, {
-        vapidKey:import.meta.env.VITE_FIREBASE_VAPID_KEY,
-      });
+      console.log("✅ Permission already granted, getting token...");
 
-      if (token) {
-        await saveFCMToken(token, userType);
-        return token;
+      try {
+        const token = await getToken(messaging, {
+          vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
+          serviceWorkerRegistration: swRegistration,
+        });
+
+        if (token) {
+          console.log("✅ FCM Token received:", token.substring(0, 30) + "...");
+          await saveFCMToken(token, userType);
+          return token;
+        } else {
+          console.error(
+            "❌ No FCM token received - check VAPID key and Firebase config",
+          );
+          return null;
+        }
+      } catch (tokenError) {
+        console.error("❌ Error getting FCM token:", tokenError);
+        console.error("Token error details:", {
+          code: tokenError.code,
+          message: tokenError.message,
+          stack: tokenError.stack,
+        });
+
+        if (tokenError.code === "messaging/token-subscribe-failed") {
+          console.error("⚠️ Push service error - check:");
+          console.error("1. VAPID key is correct");
+          console.error("2. Firebase project settings");
+          console.error("3. Service worker is properly registered");
+        }
+
+        return null;
       }
-      return null;
     }
 
     if (currentPermission === "denied") {
+      console.warn("⚠️ Notification permission denied by user");
+      toast.error("Please enable notifications in your browser settings");
       return null;
     }
 
     if (currentPermission === "default") {
+      console.log("⚠️ Requesting notification permission...");
+
       const permission = await Notification.requestPermission();
+      console.log("Permission result:", permission);
 
       if (permission === "granted") {
-        const token = await getToken(messaging, {
-          vapidKey:import.meta.env.VITE_FIREBASE_VAPID_KEY,
-        });
+        console.log("✅ Permission granted, getting token...");
 
-        if (token) {
-          await saveFCMToken(token, userType);
-          return token;
+        try {
+          const token = await getToken(messaging, {
+            vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
+            serviceWorkerRegistration: swRegistration,
+          });
+
+          if (token) {
+            console.log(
+              "✅ FCM Token received:",
+              token.substring(0, 30) + "...",
+            );
+            await saveFCMToken(token, userType);
+            return token;
+          } else {
+            console.error("❌ No FCM token received");
+            return null;
+          }
+        } catch (tokenError) {
+          console.error("❌ Error getting FCM token:", tokenError);
+          return null;
         }
+      } else {
+        console.warn("⚠️ User denied notification permission");
+        return null;
       }
-      return null;
     }
+
+    return null;
   } catch (error) {
-    console.error("Notification error:", error);
+    console.error("❌ Notification setup error:", error);
+    console.error("Error details:", {
+      name: error.name,
+      message: error.message,
+      stack: error.stack,
+    });
     return null;
   }
 };
@@ -86,14 +192,16 @@ export const removeFCMToken = async (token, userType) => {
       { token },
       { withCredentials: true },
     );
-    console.log("FCM token removed");
+    console.log("✅ FCM token removed");
   } catch (error) {
-    console.error("Error removing FCM token:", error);
+    console.error("❌ Error removing FCM token:", error);
   }
 };
 
 export const listenForMessages = (onMessageReceived) => {
   onMessage(messaging, (payload) => {
+    console.log("📩 Foreground message received:", payload);
+
     const { title, body } = payload.notification || {};
 
     if (title && body) {
@@ -147,14 +255,18 @@ export const listenForMessages = (onMessageReceived) => {
 
 export const initializeFCM = async (userType, onMessageReceived) => {
   try {
+    console.log(`🔔 Initializing FCM for ${userType}...`);
+
     const token = await requestNotificationPermission(userType);
 
     if (token) {
+      console.log("✅ FCM initialized successfully, listening for messages...");
       listenForMessages(onMessageReceived);
+    } else {
+      console.warn("⚠️ No FCM token obtained - notifications will not work");
     }
-
   } catch (error) {
-    console.error("FCM init error:", error);
+    console.error("❌ FCM initialization error:", error);
   }
 };
 
